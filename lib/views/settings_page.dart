@@ -288,43 +288,45 @@ class _SettingsPageState extends State<SettingsPage> {
                 //  print(data);
               },
             ),
-            FutureBuilder<List<ResidentDetails>>(
-                future: dbService.getResidentDetails(searchKey),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            onTap: () async {
-                              //Prefs.cityName = snapshot.data![index].cityAscii;
-                              //Prefs.lat = snapshot.data![index].lat;
-                              //Prefs.lng = snapshot.data![index].lng;
-                              widget.goToHome();
-                            },
-                            title: ColoredText(
-                                "${snapshot.data![index].kuti}, ${snapshot.data![index].country} ",
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: (Prefs.lightThemeOn)
-                                      ? Theme.of(context).primaryColor
-                                      : Colors.white,
-                                )),
-                            subtitle: ColoredText(
-                                snapshot.data![index].dhamma_name +
-                                    "," +
-                                    snapshot.data![index].country),
-                          ),
-                        );
-                      });
-                })
+            SingleChildScrollView(
+              child: FutureBuilder<List<ResidentDetails>>(
+                  future: dbService.getResidentDetails(searchKey),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              onTap: () async {
+                                //Prefs.cityName = snapshot.data![index].cityAscii;
+                                //Prefs.lat = snapshot.data![index].lat;
+                                //Prefs.lng = snapshot.data![index].lng;
+                                widget.goToHome();
+                              },
+                              title: ColoredText(
+                                  "${snapshot.data![index].kuti}, ${snapshot.data![index].country} ",
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    color: (Prefs.lightThemeOn)
+                                        ? Theme.of(context).primaryColor
+                                        : Colors.white,
+                                  )),
+                              subtitle: ColoredText(
+                                  snapshot.data![index].dhamma_name +
+                                      "," +
+                                      snapshot.data![index].country),
+                            ),
+                          );
+                        });
+                  }),
+            )
           ],
         ),
       ),

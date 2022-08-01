@@ -10,7 +10,7 @@ class DatabaseService {
   Future? _dbInit;
 
   Future initDatabase() async {
-    bool newdb = false;
+    bool newdb = true;
     _dbInit ??= await () async {
       _db = await openDatabase('assets/paauk_tracker.db');
       var databasePath = await getDatabasesPath();
@@ -49,8 +49,17 @@ class DatabaseService {
         "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like 'A%';";
 
     if (searchKey != "") {
-      dbQuery =
-          "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like '$searchKey%';";
+      switch (searchKey) {
+        case 'A':
+        case 'G':
+        case 'I':
+          dbQuery =
+              "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like '$searchKey%' AND substr (Kuti,2,1)  IN ( '0','1','2','3','4','5','6','7','8','9');";
+          break;
+        default:
+          dbQuery =
+              "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like '$searchKey%';";
+      }
     }
 
     List<Map> list = await _db.rawQuery(dbQuery);

@@ -25,7 +25,7 @@ class ResidentDetails {
     this.dhamma_name = "",
   });
 
-  String? kuti;
+  String kuti;
   // ignore: non_constant_identifier_names
   String id_code;
   // ignore: non_constant_identifier_names

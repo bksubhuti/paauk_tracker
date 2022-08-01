@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:paauk_tracker/src/models/prefs.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:paauk_tracker/src/models/colored_text.dart';
 
-import 'package:paauk_tracker/src/models/resident_details.dart';
-import 'package:paauk_tracker/src/services/get_resident_details.dart';
+// import 'package:paauk_tracker/src/models/resident_details.dart';
+///import 'package:paauk_tracker/src/services/get_resident_details.dart';
 import 'package:paauk_tracker/src/models/prefs.dart';
 import 'package:paauk_tracker/src/models/colored_text.dart';
 
@@ -17,7 +17,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Map data = {};
-  final dbService = DatabaseService();
+  //final dbService = DatabaseService();
   String searchKey = "A";
   String _kutiGroup = 'AKK';
 
@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    dbService.dispose();
+    //dbService.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -178,7 +178,8 @@ class _HomeState extends State<Home> {
                       });
                       //  print(data);
                     },
-                  ),
+                  )
+                  /*
                   FutureBuilder<List<ResidentDetails>>(
                       future: dbService.getResidentDetails(searchKey),
                       builder: (context, snapshot) {
@@ -215,7 +216,7 @@ class _HomeState extends State<Home> {
                                 ),
                               );
                             });
-                      })
+                      })*/
                 ],
               )),
         ]),

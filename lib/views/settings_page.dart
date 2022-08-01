@@ -113,107 +113,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ],
               ),
             ),
-            Card(
-              margin: const EdgeInsets.fromLTRB(10, 0, 10, 5),
-              elevation: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: TextField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true),
-                            style: TextStyle(
-                                color: (Prefs.lightThemeOn)
-                                    ? Theme.of(context).primaryColor
-                                    : Colors.white,
-                                fontSize: 15),
-                            decoration: InputDecoration(
-                                labelText: AppLocalizations.of(context)!
-                                    .decimal_number,
-                                border: const OutlineInputBorder()),
-                            onChanged: (String data) async {
-                              //_offset = double.parse(data);
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: 6.0),
-                        IconButton(
-                          icon: const Icon(Icons.save),
-                          onPressed: () async {
-                            setState(() {
-//                                Prefs.offset = _offset;
-                            });
-                            widget.goToHome();
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6.0),
-                    ColoredText(
-                        "${AppLocalizations.of(context)!.current_offset_is} 6 "),
-                  ],
-                ),
-              ),
-            ),
             const SizedBox(height: 25),
-            Card(
-              margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-              elevation: 2,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                child: Row(
-                  children: [
-                    const SizedBox(height: 6.0),
-                    ColoredText(AppLocalizations.of(context)!.safety,
-                        style: const TextStyle(
-                          fontSize: 15,
-                        )),
-                    const SizedBox(width: 10.0),
-                    DropdownButton<String>(
-                        value: _safetyItems[1],
-                        style: TextStyle(
-                          color: (Prefs.lightThemeOn)
-                              ? Theme.of(context).primaryColor
-                              : Colors.white,
-                        ),
-                        isDense: false,
-                        onChanged: (newValue) {
-                          setState(() {
-//                              Prefs.safety = _safetyItems.indexOf(newValue!);
-                          });
-                        },
-                        items: _safetyItems.map<DropdownMenuItem<String>>(
-                          (String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: TextStyle(
-                                    color: (Prefs.lightThemeOn)
-                                        ? Theme.of(context).primaryColor
-                                        : Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            );
-                          },
-                        ).toList()),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    (1 > 0)
-                        ? //Text('\ud83d\udee1')
-                        Icon(Icons.health_and_safety_outlined,
-                            color: Theme.of(context).colorScheme.primary)
-                        : const Text(""),
-                  ],
-                ),
-              ),
-            ),
             const SizedBox(
               height: 10,
             ),
@@ -289,6 +189,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
             ),
             SingleChildScrollView(
+              physics: const ScrollPhysics(),
               child: FutureBuilder<List<ResidentDetails>>(
                   future: dbService.getResidentDetails(searchKey),
                   builder: (context, snapshot) {
@@ -298,6 +199,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       );
                     }
                     return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         itemCount: snapshot.data!.length,
@@ -305,11 +207,11 @@ class _SettingsPageState extends State<SettingsPage> {
                           return Card(
                             child: ListTile(
                               onTap: () async {
-                                //Prefs.cityName = snapshot.data![index].cityAscii;
-                                //Prefs.lat = snapshot.data![index].lat;
-                                //Prefs.lng = snapshot.data![index].lng;
-                                widget.goToHome();
-                              },
+                                _showSignInDialog(
+                                    snapshot.data![index].dhamma_name,
+                                    snapshot.data![index].kuti,
+                                    snapshot.data![index].country);
+                              }, // on tap
                               title: ColoredText(
                                   "${snapshot.data![index].kuti}, ${snapshot.data![index].country} ",
                                   style: TextStyle(
@@ -330,6 +232,60 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _showSignInDialog(
+      String name, String kuti, String country) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Sign In'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                ColoredText(name,
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: (Prefs.lightThemeOn)
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    )),
+                ColoredText("Kuti = ${kuti} ",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: (Prefs.lightThemeOn)
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    )),
+                ColoredText("${country} ",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: (Prefs.lightThemeOn)
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    )),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -9,6 +9,7 @@ import 'package:paauk_tracker/src/models/select_language_widget.dart';
 import 'package:paauk_tracker/src/models/select_theme_widget.dart';
 import 'package:paauk_tracker/src/models/colored_text.dart';
 import 'package:paauk_tracker/src/models/change_theme_widget.dart';
+import 'package:paauk_tracker/src/services/database_helper.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key, required this.goToHome}) : super(key: key);
@@ -19,7 +20,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final dbService = DatabaseService();
+  final dbService = GetResidentDetails();
   String searchKey = "A";
   String _kutiGroup = 'AKK';
 
@@ -36,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   void dispose() {
-    dbService.dispose();
+    //dbService.dispose();
     super.dispose();
   }
 

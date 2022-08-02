@@ -1,11 +1,13 @@
 import 'package:paauk_tracker/views/settings_page.dart';
 import 'package:paauk_tracker/views/home.dart';
+import 'package:paauk_tracker/views/kumarabhivamsa_interview.dart';
 
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'dart:io' show Platform;
 import 'package:paauk_tracker/src/models/prefs.dart';
 import 'package:paauk_tracker/src/models/colored_text.dart';
+import 'package:paauk_tracker/src/services/database_helper.dart';
 
 // #docregion LocalizationDelegatesImport
 //import 'package:flutter_localizations/flutter_localizations.dart';
@@ -40,6 +42,7 @@ class HomePageContainerState extends State<HomePageContainer> {
   }
 
   late Home _page1;
+  late KumarabhivamsaInterview _page2;
   late SettingsPage _page5;
   //late DummyPage _dummyPage;
 
@@ -54,6 +57,7 @@ class HomePageContainerState extends State<HomePageContainer> {
     // these toggles always get set to false
     //    _dummyPage = DummyPage();
     _page1 = const Home();
+    _page2 = const KumarabhivamsaInterview();
     _page5 = SettingsPage(goToHome: goToHome);
   }
 
@@ -173,6 +177,15 @@ class HomePageContainerState extends State<HomePageContainer> {
             BottomNavyBarItem(
                 activeColor: Theme.of(context).bottomAppBarColor,
                 title: Text(
+                  "Kumarabhivamsa",
+                  style: TextStyle(
+                      color: Theme.of(context).appBarTheme.foregroundColor),
+                ),
+                icon: Icon(Icons.brightness_5_sharp,
+                    color: Theme.of(context).appBarTheme.foregroundColor)),
+            BottomNavyBarItem(
+                activeColor: Theme.of(context).bottomAppBarColor,
+                title: Text(
                   AppLocalizations.of(context)!.settings,
                   style: TextStyle(
                       color: Theme.of(context).appBarTheme.foregroundColor),
@@ -193,6 +206,7 @@ class HomePageContainerState extends State<HomePageContainer> {
           },
           children: <Widget>[
             _page1,
+            _page2,
             _page5,
           ],
         ),

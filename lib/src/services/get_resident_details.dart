@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:paauk_tracker/src/models/resident_details.dart';
+import 'package:paauk_tracker/src/services/database_helper.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseService {
-  late Database _db;
+class GetResidentDetails {
+  final _dbHelper = DatabaseHelper();
+
+  /*late Database _db;
   Future? _dbInit;
 
   Future initDatabase() async {
@@ -42,9 +45,11 @@ class DatabaseService {
       _db = await openDatabase(path, readOnly: true);
     }();
   }
-
+*/
   Future<List<ResidentDetails>> getResidentDetails(searchKey) async {
-    await initDatabase();
+    //await initDatabase();
+    final _db = await _dbHelper.database;
+
     String dbQuery =
         "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like 'A%';";
 
@@ -68,9 +73,5 @@ class DatabaseService {
         .toList();
 
     //return list.map((trail) => Trail.fromJson(trail)).toList();
-  }
-
-  dispose() {
-    _db.close();
   }
 }

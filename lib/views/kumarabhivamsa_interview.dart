@@ -7,18 +7,18 @@ import 'package:paauk_tracker/src/models/colored_text.dart';
 ///import 'package:paauk_tracker/src/services/get_resident_details.dart';
 import 'package:paauk_tracker/src/models/prefs.dart';
 import 'package:paauk_tracker/src/models/colored_text.dart';
-import 'package:paauk_tracker/src/services/database_helper.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class KumarabhivamsaInterview extends StatefulWidget {
+  const KumarabhivamsaInterview({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _KumarabhivamsaInterviewState createState() =>
+      _KumarabhivamsaInterviewState();
 }
 
-class _HomeState extends State<Home> {
+class _KumarabhivamsaInterviewState extends State<KumarabhivamsaInterview> {
   Map data = {};
-  final _dhHelper = DatabaseHelper();
+  //final dbService = DatabaseService();
   String searchKey = "A";
   String _kutiGroup = 'AKK';
 
@@ -66,7 +66,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     // make sure there are no lingering keyboards when this page is shown
-    //FocusScope.of(context).unfocus();
     _addKutiGroupItemsToMemberList();
 
     return SingleChildScrollView(
@@ -76,15 +75,16 @@ class _HomeState extends State<Home> {
           Center(
             child: CircleAvatar(
               backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-              backgroundImage: const AssetImage("assets/pa_auk_sayadawgyi.png"),
+              backgroundImage:
+                  const AssetImage("assets/sayadaw_kumarabhivamsa.png"),
               radius: 50.0,
             ),
           ),
           const SizedBox(
             height: 20,
           ),
-          ColoredText("Sayadawgyi",
-              style: const TextStyle(fontSize: 60, letterSpacing: 2)),
+          ColoredText("Sayadaw Kumarabhivamsa",
+              style: const TextStyle(fontSize: 48, letterSpacing: 2)),
           const Divider(
             height: 50.0,
           ),

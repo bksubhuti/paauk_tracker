@@ -1,10 +1,5 @@
-import 'dart:io';
-
-import 'package:flutter/services.dart';
 import 'package:paauk_tracker/src/models/resident_details.dart';
 import 'package:paauk_tracker/src/services/database_helper.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 
 class GetResidentDetails {
   final _dbHelper = DatabaseHelper();
@@ -59,11 +54,11 @@ class GetResidentDetails {
         case 'G':
         case 'I':
           dbQuery =
-              "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like '$searchKey%' AND substr (Kuti,2,1)  IN ( '0','1','2','3','4','5','6','7','8','9');";
+              "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like '$searchKey%' AND substr (Kuti,2,1)  IN ( '0','1','2','3','4','5','6','7','8','9') ORDER BY kuti;";
           break;
         default:
           dbQuery =
-              "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like '$searchKey%';";
+              "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like '$searchKey%' ORDER BY kuti;";
       }
     }
 

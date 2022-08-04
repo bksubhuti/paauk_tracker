@@ -7,7 +7,6 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'dart:io' show Platform;
 import 'package:paauk_tracker/src/models/prefs.dart';
 import 'package:paauk_tracker/src/models/colored_text.dart';
-import 'package:paauk_tracker/src/services/database_helper.dart';
 
 // #docregion LocalizationDelegatesImport
 //import 'package:flutter_localizations/flutter_localizations.dart';
@@ -32,7 +31,7 @@ class HomePageContainerState extends State<HomePageContainer> {
       Platform.isMacOS || Platform.isWindows || Platform.isLinux;
 
   late PageController _pageController;
-
+  final _locked = true;
   final String title = "Buddhist Sun";
 
   void goToHome() {
@@ -46,7 +45,7 @@ class HomePageContainerState extends State<HomePageContainer> {
   late SettingsPage _page5;
   //late DummyPage _dummyPage;
 
-  int _currentIndex = (Prefs.lat == 1.1) ? 3 : 0;
+  int _currentIndex = 0;
   //Widget _currentPage = Home();
 
   @override
@@ -55,7 +54,6 @@ class HomePageContainerState extends State<HomePageContainer> {
     _pageController = PageController(initialPage: _currentIndex);
 
     // these toggles always get set to false
-    //    _dummyPage = DummyPage();
     _page1 = const Home();
     _page2 = const KumarabhivamsaInterview();
     _page5 = SettingsPage(goToHome: goToHome);
@@ -107,8 +105,8 @@ class HomePageContainerState extends State<HomePageContainer> {
               decoration: const BoxDecoration(),
               child: Column(
                 children: [
-                  ColoredText("Pa-Auk Tracker",
-                      style: const TextStyle(
+                  const ColoredText("Pa-Auk Tracker",
+                      style: TextStyle(
                         fontSize: 17,
                       )),
                   const SizedBox(height: 15.0),
@@ -204,11 +202,7 @@ class HomePageContainerState extends State<HomePageContainer> {
 
             //setState(() => _currentIndex = index);
           },
-          children: <Widget>[
-            _page1,
-            _page2,
-            _page5,
-          ],
+          children: <Widget>[_page1, _page2, _page5],
         ),
       ),
     );

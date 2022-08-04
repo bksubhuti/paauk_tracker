@@ -4,11 +4,11 @@
 
 import 'dart:convert';
 
-List<ResidentDetails> worldCitiesFromJson(String str) =>
+List<ResidentDetails> residentDetailsFromJson(String str) =>
     List<ResidentDetails>.from(
         json.decode(str).map((x) => ResidentDetails.fromJson(x)));
 
-String worldCitiesToJson(List<ResidentDetails> data) =>
+String residentDetailsToJson(List<ResidentDetails> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ResidentDetails {
@@ -39,7 +39,7 @@ class ResidentDetails {
   factory ResidentDetails.fromJson(Map<dynamic, dynamic> json) {
     return ResidentDetails(
       kuti: json["kuti"] ?? "n/a",
-      id_code: json["id_codeode"] ?? "n/a",
+      id_code: json["id_code"] ?? "n/a",
       passport_name: json["passport_name"] ?? "n/a",
       country: json["country"] ?? "n/a",
       ordination_state: json["ordination_state"] ?? "n/a",

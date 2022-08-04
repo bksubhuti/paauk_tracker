@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:paauk_tracker/src/models/prefs.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:paauk_tracker/src/models/colored_text.dart';
 
-// import 'package:paauk_tracker/src/models/resident_details.dart';
-///import 'package:paauk_tracker/src/services/get_resident_details.dart';
-import 'package:paauk_tracker/src/models/prefs.dart';
-import 'package:paauk_tracker/src/models/colored_text.dart';
+import 'package:paauk_tracker/views/sign_in_view.dart';
 
 class KumarabhivamsaInterview extends StatefulWidget {
   const KumarabhivamsaInterview({Key? key}) : super(key: key);
@@ -18,9 +14,6 @@ class KumarabhivamsaInterview extends StatefulWidget {
 
 class _KumarabhivamsaInterviewState extends State<KumarabhivamsaInterview> {
   Map data = {};
-  //final dbService = DatabaseService();
-  String searchKey = "A";
-  String _kutiGroup = 'AKK';
 
   final List<String> _kutiGroupItems = <String>[];
 
@@ -61,7 +54,7 @@ class _KumarabhivamsaInterviewState extends State<KumarabhivamsaInterview> {
     }
   }
 
-  var _controller = TextEditingController();
+  final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -83,16 +76,16 @@ class _KumarabhivamsaInterviewState extends State<KumarabhivamsaInterview> {
           const SizedBox(
             height: 20,
           ),
-          ColoredText("Sayadaw Kumarabhivamsa",
-              style: const TextStyle(fontSize: 48, letterSpacing: 2)),
+          const ColoredText("Sayadaw Kumarabhivamsa",
+              style: TextStyle(fontSize: 38, letterSpacing: 2)),
           const Divider(
-            height: 50.0,
+            height: 20.0,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const ColoredText("Interview",
-                  style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold)),
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
               (1 > 0) // later this will be the male female sign to show.
                   ? //Text('\ud83d\udee1')
                   Icon(Icons.health_and_safety_outlined,
@@ -102,7 +95,7 @@ class _KumarabhivamsaInterviewState extends State<KumarabhivamsaInterview> {
           ),
           const SizedBox(height: 10.0),
           Padding(
-              padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 40.0, 30.0, 0.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -115,109 +108,21 @@ class _KumarabhivamsaInterviewState extends State<KumarabhivamsaInterview> {
                       child: Row(
                         children: [
                           const SizedBox(height: 6.0),
-                          const ColoredText("Kuti Group:",
-                              style: TextStyle(
-                                fontSize: 16,
-                              )),
-                          const SizedBox(
-                            width: 10.0,
-                            height: 20,
-                          ),
-                          DropdownButton<String>(
-                              value: _kutiGroup,
-                              style: TextStyle(
-                                color: (Prefs.lightThemeOn)
-                                    ? Theme.of(context).primaryColor
-                                    : Colors.white,
-                              ),
-                              isDense: true,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  _kutiGroup = newValue!;
-                                  searchKey = newValue;
-
-                                  //                                _dawnMethodItems.indexOf(newValue!);
-                                });
-                              },
-                              items:
-                                  _kutiGroupItems.map<DropdownMenuItem<String>>(
-                                (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: ColoredText(
-                                      value,
-                                      style: TextStyle(
-                                          color: (Prefs.lightThemeOn)
-                                              ? Theme.of(context).primaryColor
-                                              : Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  );
-                                },
-                              ).toList()),
                         ],
                       ),
                     ),
                   ),
                   const SizedBox(height: 15),
-                  TextField(
-                    style: TextStyle(
-                        color: (Prefs.lightThemeOn)
-                            ? Theme.of(context).primaryColor
-                            : null,
-                        fontSize: 20),
-                    decoration: InputDecoration(
-                        labelText: "Search For Kuti",
-                        border: const OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)))),
-                    controller: _controller,
-                    onChanged: (String data) {
-                      setState(() {
-                        searchKey = data;
-                      });
-                      //  print(data);
+                  ElevatedButton(
+                    child: const Text('Sign In'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignInView()),
+                      );
                     },
-                  )
-                  /*
-                  FutureBuilder<List<ResidentDetails>>(
-                      future: dbService.getResidentDetails(searchKey),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                child: ListTile(
-                                  onTap: () async {
-                                    //Prefs.cityName = snapshot.data![index].cityAscii;
-                                    //Prefs.lat = snapshot.data![index].lat;
-                                    //Prefs.lng = snapshot.data![index].lng;
-                                    //widget.goToHome();
-                                  },
-                                  title: ColoredText(
-                                      "${snapshot.data![index].kuti}, ${snapshot.data![index].country} ",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        color: (Prefs.lightThemeOn)
-                                            ? Theme.of(context).primaryColor
-                                            : Colors.white,
-                                      )),
-                                  subtitle: ColoredText(
-                                      snapshot.data![index].dhamma_name +
-                                          "," +
-                                          snapshot.data![index].country),
-                                ),
-                              );
-                            });
-                      })*/
+                  ),
                 ],
               )),
         ]),

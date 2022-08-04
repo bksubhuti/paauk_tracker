@@ -10,7 +10,7 @@ class DatabaseHelper {
   factory DatabaseHelper() => _instance;
 
   static Database? _database;
-  Future? _dbInit;
+  // Future? _dbInit;
   Future<Database> get database async {
     if (_database != null) return _database!;
     // lazily instantiate the db the first time it is accessed
@@ -18,38 +18,36 @@ class DatabaseHelper {
     return _database!;
   }
 
-  Future initDatabase() async {
+  Future<Database> initDatabase() async {
     bool newdb = true;
-    _dbInit ??= await () async {
-      _database = await openDatabase('assets/paauk_tracker.db');
-      var databasePath = await getDatabasesPath();
-      var path = join(databasePath, 'paauk_tracker.db');
 
-      //Check if DB exists
-      var exists = await databaseExists(path);
+    _database = await openDatabase('assets/paauk_tracker.db');
+    var databasePath = await getDatabasesPath();
+    var path = join(databasePath, 'paauk_tracker.db');
 
-      if (!exists || newdb) {
-        // or newdb is to always if db changes  (set to true for initial debug mode)
-        //print('Create a new copy from assets');
+    //Check if DB exists
+    var exists = await databaseExists(path);
 
-        //Check if parent directory exists
-        try {
-          await Directory(dirname(path)).create(recursive: true);
-        } catch (_) {}
+    if (!exists || newdb) {
+      // or newdb is to always if db changes  (set to true for initial debug mode)
+      //print('Create a new copy from assets');
 
-        //Copy from assets
-        ByteData data =
-            await rootBundle.load(join("assets", "paauk_tracker.db"));
-        List<int> bytes =
-            data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+      //Check if parent directory exists
+      try {
+        await Directory(dirname(path)).create(recursive: true);
+      } catch (_) {}
 
-        //Write and flush the bytes
-        await File(path).writeAsBytes(bytes, flush: true);
-      }
+      //Copy from assets
+      ByteData data = await rootBundle.load(join("assets", "paauk_tracker.db"));
+      List<int> bytes =
+          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
-      //Open the database
-      _database = await openDatabase(path, readOnly: true);
-    }();
+      //Write and flush the bytes
+      await File(path).writeAsBytes(bytes, flush: true);
+    }
+
+    //Open the database
+    return await openDatabase(path, readOnly: false);
   }
 
   Future close() async {

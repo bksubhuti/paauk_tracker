@@ -106,8 +106,8 @@ class _KumarabhivamsaInterviewState extends State<KumarabhivamsaInterview> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                       child: Row(
-                        children: [
-                          const SizedBox(height: 6.0),
+                        children: const [
+                          SizedBox(height: 6.0),
                         ],
                       ),
                     ),

@@ -7,12 +7,9 @@ import 'package:paauk_tracker/src/models/select_language_widget.dart';
 import 'package:paauk_tracker/src/models/select_theme_widget.dart';
 import 'package:paauk_tracker/src/models/colored_text.dart';
 import 'package:paauk_tracker/src/models/change_theme_widget.dart';
-import 'package:paauk_tracker/src/models/resident_details.dart';
 import 'package:paauk_tracker/src/services/get_resident_details.dart';
 import 'package:share_plus/share_plus.dart';
-import 'dart:io';
 
-import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -26,12 +23,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final dbService = GetResidentDetails();
-  String searchKey = "A";
-  String _kutiGroup = 'AKK';
-
-  final List<String> _safetyItems = <String>[];
-
-  final List<String> _kutiGroupItems = <String>[];
+  bool _locked = true;
 
   @override
   void initState() {
@@ -96,6 +88,42 @@ class _SettingsPageState extends State<SettingsPage> {
                         box!.localToGlobal(Offset.zero) & box.size);
               },
             ),
+            const SizedBox(height: 20),
+            TextField(
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              obscureText: true,
+              style: TextStyle(
+                  color: (Prefs.lightThemeOn)
+                      ? Theme.of(context).primaryColor
+                      : Colors.white,
+                  fontSize: 15),
+              decoration: const InputDecoration(
+                  labelText: "Pin Code", border: OutlineInputBorder()),
+              onChanged: (String data) async {
+                setState(() {
+                  Prefs.locked = (data != "5656");
+                  _locked = Prefs.locked;
+                });
+              },
+            ),
+            const SizedBox(height: 90),
+            _locked == true
+                ? const Text("locked")
+                : Transform.scale(
+                    scale: 5.5,
+                    child: Switch(
+                        //title: const Text('Sayadaw'),
+                        activeThumbImage:
+                            const AssetImage('assets/pa_auk_sayadawgyi.png'),
+                        inactiveThumbImage: const AssetImage(
+                            'assets/sayadaw_kumarabhivamsa.png'),
+                        value: Prefs.sayadawgyi,
+                        onChanged: (bool value) {
+                          setState(() {
+                            Prefs.sayadawgyi = value;
+                          });
+                        })),
           ],
         ),
       ),

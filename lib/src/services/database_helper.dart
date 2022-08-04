@@ -19,7 +19,7 @@ class DatabaseHelper {
   }
 
   Future<Database> initDatabase() async {
-    bool newdb = true;
+    bool newdb = false;
 
     _database = await openDatabase('assets/paauk_tracker.db');
     var databasePath = await getDatabasesPath();

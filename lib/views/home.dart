@@ -39,6 +39,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     // make sure there are no lingering keyboards when this page is shown
     //FocusScope.of(context).unfocus();
+    final teacherImage = Prefs.sayadawgyi
+        ? "assets/pa_auk_sayadawgyi.png"
+        : "assets/sayadaw_kumarabhivamsa.png";
 
     return SingleChildScrollView(
       child: Padding(
@@ -47,15 +50,18 @@ class _HomeState extends State<Home> {
           Center(
             child: CircleAvatar(
               backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-              backgroundImage: const AssetImage("assets/pa_auk_sayadawgyi.png"),
+              backgroundImage: AssetImage(teacherImage),
               radius: 50.0,
             ),
           ),
           const SizedBox(
             height: 10,
           ),
-          const ColoredText("Sayadawgyi",
-              style: TextStyle(fontSize: 50, letterSpacing: 2)),
+          Prefs.sayadawgyi
+              ? const ColoredText("Sayadawgyi",
+                  style: TextStyle(fontSize: 50, letterSpacing: 2))
+              : const ColoredText("Sayadaw Kumarabhivamsa",
+                  style: TextStyle(fontSize: 20, letterSpacing: 2)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -89,7 +95,8 @@ class _HomeState extends State<Home> {
                   SingleChildScrollView(
                     physics: const ScrollPhysics(),
                     child: FutureBuilder<List<InterviewDetails>>(
-                        future: dbService.getInterviewDetails(dummy),
+                        future: dbService.getInterviewDetails(
+                            dummy, Prefs.sayadawgyi),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
                             return const Center(

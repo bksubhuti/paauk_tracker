@@ -249,7 +249,7 @@ class _SignInViewState extends State<SignInView> {
             TextButton(
               child: const Text('Approve'),
               onPressed: () async {
-                await iq.addInterviewRecord(iDCode);
+                await iq.addInterviewRecord(iDCode, Prefs.sayadawgyi);
                 Navigator.of(context).pop();
               },
             ),

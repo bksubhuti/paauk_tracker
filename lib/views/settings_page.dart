@@ -94,9 +94,19 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              child: const Text('Export CSV'),
+              child: const Text('Share CSV'),
               onPressed: () async {
                 _writeCSVFile();
+                var databasePath = await getDatabasesPath();
+                String path = join(databasePath, 'paauk_tracker.csv');
+                final List<String> sl = [path];
+                final box = context.findRenderObject() as RenderBox?;
+
+                await Share.shareFiles(sl,
+                    text: "Share DB",
+                    subject: "Pa-Auk Tracker",
+                    sharePositionOrigin:
+                        box!.localToGlobal(Offset.zero) & box.size);
               },
             ),
             const SizedBox(height: 20),

@@ -1,5 +1,7 @@
 //import 'dart:ffi';
 
+import 'dart:io';
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:paauk_tracker/src/models/prefs.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -9,6 +11,8 @@ import 'package:paauk_tracker/src/models/colored_text.dart';
 import 'package:paauk_tracker/src/models/change_theme_widget.dart';
 import 'package:paauk_tracker/src/services/get_resident_details.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:paauk_tracker/src/services/interview_queries.dart';
+import 'package:paauk_tracker/src/models/interview_details.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -89,6 +93,13 @@ class _SettingsPageState extends State<SettingsPage> {
               },
             ),
             const SizedBox(height: 20),
+            ElevatedButton(
+              child: const Text('Export CSV'),
+              onPressed: () async {
+                _writeCSVFile();
+              },
+            ),
+            const SizedBox(height: 20),
             TextField(
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
@@ -128,5 +139,23 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
     );
+  }
+
+  Future _writeCSVFile() async {
+    final dbService = InterviewQueries();
+    String csv = "id_code\tteacher\tstime\treal_time\n";
+    List<InterviewDetails> rows = await dbService.getAllInterviewDetails();
+
+    for (int i = 0; i < rows.length; i++) {
+      csv +=
+          "${rows[i].id_code}\t${rows[i].teacher}\t${rows[i].stime}\t${rows[i].real_time}\n";
+    }
+
+    var databasePath = await getDatabasesPath();
+    String path = join(databasePath, 'paauk_tracker.csv');
+
+    File f = File(path);
+    //String csv = const ListToCsvConverter().convert(rows);
+    f.writeAsString(csv);
   }
 }

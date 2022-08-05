@@ -8,6 +8,7 @@ import 'package:paauk_tracker/src/models/colored_text.dart';
 ///import 'package:paauk_tracker/src/services/get_resident_details.dart';
 import 'package:paauk_tracker/src/services/interview_queries.dart';
 import 'package:paauk_tracker/views/sign_in_view.dart';
+import 'package:paauk_tracker/views/show_date_history_dlg.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -111,19 +112,25 @@ class _HomeState extends State<Home> {
                               itemBuilder: (context, index) {
                                 return Card(
                                   child: ListTile(
-                                    title: ColoredText(
-                                        "${snapshot.data![index].dhamma_name}, ${snapshot.data![index].kuti} ",
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                          color: (Prefs.lightThemeOn)
-                                              ? Theme.of(context).primaryColor
-                                              : Colors.white,
-                                        )),
-                                    subtitle: ColoredText(
-                                        snapshot.data![index].country +
-                                            "," +
-                                            snapshot.data![index].country),
-                                  ),
+                                      title: ColoredText(
+                                          "${snapshot.data![index].dhamma_name}, ${snapshot.data![index].kuti} ",
+                                          style: TextStyle(
+                                            fontSize: 17,
+                                            color: (Prefs.lightThemeOn)
+                                                ? Theme.of(context).primaryColor
+                                                : Colors.white,
+                                          )),
+                                      subtitle: ColoredText(
+                                          snapshot.data![index].country +
+                                              "," +
+                                              snapshot.data![index].country),
+                                      onTap: () {
+                                        showDateHistoryDialog(
+                                          context,
+                                          snapshot.data![index].id_code,
+                                          snapshot.data![index].dhamma_name,
+                                        );
+                                      }),
                                 );
                               });
                         }),

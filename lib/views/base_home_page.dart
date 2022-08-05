@@ -1,6 +1,6 @@
 import 'package:paauk_tracker/views/settings_page.dart';
 import 'package:paauk_tracker/views/home.dart';
-
+import 'package:paauk_tracker/views/history.dart';
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'dart:io' show Platform;
@@ -39,7 +39,7 @@ class HomePageContainerState extends State<HomePageContainer> {
   }
 
   late Home _page1;
-  //late KumarabhivamsaInterview _page2;
+  late History _page2;
   late SettingsPage _page5;
   //late DummyPage _dummyPage;
 
@@ -53,7 +53,7 @@ class HomePageContainerState extends State<HomePageContainer> {
 
     // these toggles always get set to false
     _page1 = const Home();
-    //_page2 = const KumarabhivamsaInterview();
+    _page2 = const History();
     _page5 = SettingsPage(goToHome: goToHome);
   }
 
@@ -174,6 +174,16 @@ class HomePageContainerState extends State<HomePageContainer> {
             BottomNavyBarItem(
                 activeColor: Theme.of(context).bottomAppBarColor,
                 title: Text(
+                  "History",
+                  style: TextStyle(
+                      color: Theme.of(context).appBarTheme.foregroundColor,
+                      fontSize: 12),
+                ),
+                icon: Icon(Icons.history,
+                    color: Theme.of(context).appBarTheme.foregroundColor)),
+            BottomNavyBarItem(
+                activeColor: Theme.of(context).bottomAppBarColor,
+                title: Text(
                   AppLocalizations.of(context)!.settings,
                   style: TextStyle(
                       color: Theme.of(context).appBarTheme.foregroundColor,
@@ -193,7 +203,7 @@ class HomePageContainerState extends State<HomePageContainer> {
 
             //setState(() => _currentIndex = index);
           },
-          children: <Widget>[_page1, _page5],
+          children: <Widget>[_page1, _page2, _page5],
         ),
       ),
     );

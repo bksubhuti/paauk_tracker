@@ -17,7 +17,7 @@ class _SignInViewState extends State<SignInView> {
 
   String searchKey = "A";
 
-  String _kutiGroup = 'AKK';
+  String _kutiGroup = 'A';
 
   final List<String> _kutiGroupItems = <String>[];
 

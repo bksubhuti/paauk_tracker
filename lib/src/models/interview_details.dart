@@ -20,7 +20,7 @@ class InterviewDetails {
       // ignore: non_constant_identifier_names
       this.id_code = "",
       // ignore: non_constant_identifier_names
-      this.sdate = "",
+      this.stime = "",
       // ignore: non_constant_identifier_names
       this.real_time = 0,
       this.teacher = ""});
@@ -33,7 +33,7 @@ class InterviewDetails {
   String id_code;
   // ignore: non_constant_identifier_names
   // ignore: non_constant_identifier_names
-  String sdate;
+  String stime;
   // ignore: non_constant_identifier_names
   int real_time;
   String teacher;
@@ -44,7 +44,7 @@ class InterviewDetails {
       kuti: json["kuti"] ?? "n/a",
       country: json["country"] ?? "n/a",
       id_code: json["id_code"] ?? "n/a",
-      sdate: json["sdate"] ?? "n/a",
+      stime: json["stime"] ?? "n/a",
       real_time: json["real_time"] ?? 0,
       teacher: json["teacher"] ?? "n/a",
     );
@@ -55,7 +55,7 @@ class InterviewDetails {
         "kuti": kuti,
         "country: json": country,
         "iDCode": id_code,
-        "sdate": sdate,
+        "stime": stime,
         "real_time": real_time,
         "teacher": teacher,
       };

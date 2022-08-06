@@ -98,7 +98,7 @@ class _SignInViewState extends State<SignInView> {
                       const SizedBox(
                         width: 10.0,
                         height: 20,
-                      ),
+                      ), /*
                       DropdownButton<String>(
                           value: _kutiGroup,
                           style: TextStyle(
@@ -130,11 +130,12 @@ class _SignInViewState extends State<SignInView> {
                                 ),
                               );
                             },
-                          ).toList()),
+                          ).toList()),*/
                     ],
                   ),
                 ),
               ),
+              /*
               const SizedBox(height: 15),
               TextField(
                 style: TextStyle(
@@ -153,7 +154,41 @@ class _SignInViewState extends State<SignInView> {
                   });
                   //  print(data);
                 },
-              ),
+              ),*/
+              SizedBox(
+                height: 200,
+                child: GridView.builder(
+                  //physics: NeverScrollableScrollPhysics(),
+                  //shrinkWrap: true,
+                  // padding: EdgeInsets.all(16.0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 8,
+                    mainAxisSpacing: 4.0,
+                    crossAxisSpacing: 8.0,
+                    childAspectRatio: 2,
+                  ),
+                  itemCount: _kutiGroupItems.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: 70,
+                      width: 70,
+                      child: Card(
+                        child: ListTile(
+                          title: ColoredText("${_kutiGroupItems[index]}",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: (Prefs.lightThemeOn)
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.white,
+                              )),
+                          // onTap: () => _onTapCallback(book)
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              )
+              /*
               Wrap(
                 spacing: 8.0, // gap between adjacent chips
                 runSpacing: 4.0, // gap between lines
@@ -459,7 +494,8 @@ class _SignInViewState extends State<SignInView> {
                     ),
                   ),
                 ],
-              ),
+              ),*/
+              ,
               SingleChildScrollView(
                 physics: const ScrollPhysics(),
                 child: FutureBuilder<List<ResidentDetails>>(

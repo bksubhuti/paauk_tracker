@@ -64,6 +64,7 @@ class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     _addKutiGroupItemsToMemberList();
+    int idx = 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -152,6 +153,312 @@ class _SignInViewState extends State<SignInView> {
                   });
                   //  print(data);
                 },
+              ),
+              Wrap(
+                spacing: 8.0, // gap between adjacent chips
+                runSpacing: 4.0, // gap between lines
+                children: <Widget>[
+                  SizedBox(
+                    height: 50,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[0]}'!;
+                            searchKey = '${_kutiGroupItems[0]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[1]}'!;
+                            searchKey = '${_kutiGroupItems[1]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[2]}'!;
+                            searchKey = '${_kutiGroupItems[2]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[3]}'!;
+                            searchKey = '${_kutiGroupItems[3]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[4]}'!;
+                            searchKey = '${_kutiGroupItems[4]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[5]}'!;
+                            searchKey = '${_kutiGroupItems[5]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[6]}'!;
+                            searchKey = '${_kutiGroupItems[6]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[7]}'!;
+                            searchKey = '${_kutiGroupItems[7]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[8]}'!;
+                            searchKey = '${_kutiGroupItems[8]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[9]}'!;
+                            searchKey = '${_kutiGroupItems[9]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[10]}'!;
+                            searchKey = '${_kutiGroupItems[10]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[11]}'!;
+                            searchKey = '${_kutiGroupItems[11]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[12]}'!;
+                            searchKey = '${_kutiGroupItems[12]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[13]}'!;
+                            searchKey = '${_kutiGroupItems[13]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[14]}'!;
+                            searchKey = '${_kutiGroupItems[14]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[15]}'!;
+                            searchKey = '${_kutiGroupItems[15]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[16]}'!;
+                            searchKey = '${_kutiGroupItems[16]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[17]}'!;
+                            searchKey = '${_kutiGroupItems[17]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[18]}'!;
+                            searchKey = '${_kutiGroupItems[18]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: 80,
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            _kutiGroup = '${_kutiGroupItems[19]}'!;
+                            searchKey = '${_kutiGroupItems[19]}';
+                          });
+                        },
+                        title: Text('${_kutiGroupItems[idx++]}'),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SingleChildScrollView(
                 physics: const ScrollPhysics(),

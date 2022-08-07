@@ -3,7 +3,7 @@ import 'package:paauk_tracker/src/services/database_helper.dart';
 
 class InterviewQueries {
   final _dbHelper = DatabaseHelper();
-  Future<List<KutiGroup>> getInterviewDetails(
+  Future<List<InterviewDetails>> getInterviewDetails(
       int dummy, bool sayadawgyi) async {
     //await initDatabase();
     final _db = await _dbHelper.database;
@@ -11,55 +11,55 @@ class InterviewQueries {
     final teacher = sayadawgyi ? "1" : "2";
 
     String dbQuery =
-        '''Select residentDetails.id_code, residentDetails.dhamma_name, residentDetails.kuti, residentDetails.country, interviews.stime 
+        '''Select residentDetails.id_code, residentDetails.dhamma_name, residentDetails.passport_name, residentDetails.kuti, residentDetails.country, interviews.stime 
           FROM residentDetails, interviews
           WHERE residentDetails.id_code = interviews.id_code AND teacher = '$teacher' AND stime = '${now.day}/${now.month}/${now.year}'
           ORDER BY interviews.real_time DESC''';
 
     List<Map> list = await _db.rawQuery(dbQuery);
     return list
-        .map((interviewdetails) => KutiGroup.fromJson(interviewdetails))
+        .map((interviewdetails) => InterviewDetails.fromJson(interviewdetails))
         .toList();
 
     //return list.map((trail) => Trail.fromJson(trail)).toList();
   }
 
-  Future<List<KutiGroup>> getAllInterviewDetails() async {
+  Future<List<InterviewDetails>> getAllInterviewDetails() async {
     //await initDatabase();
     final _db = await _dbHelper.database;
 
     String dbQuery =
-        '''Select residentDetails.id_code, residentDetails.dhamma_name, residentDetails.kuti, residentDetails.country, interviews.stime, interviews.real_time, interviews.teacher
+        '''Select residentDetails.id_code, residentDetails.dhamma_name, residentDetails.passport_name,residentDetails.kuti, residentDetails.country, interviews.stime, interviews.real_time, interviews.teacher
           FROM residentDetails, interviews
           WHERE residentDetails.id_code = interviews.id_code
           ORDER BY interviews.real_time DESC''';
 
     List<Map> list = await _db.rawQuery(dbQuery);
     return list
-        .map((interviewdetails) => KutiGroup.fromJson(interviewdetails))
+        .map((interviewdetails) => InterviewDetails.fromJson(interviewdetails))
         .toList();
 
     //return list.map((trail) => Trail.fromJson(trail)).toList();
   }
 
-  Future<List<KutiGroup>> getInterviewDetailsByDate(
+  Future<List<InterviewDetails>> getInterviewDetailsByDate(
       DateTime dt, bool sayadawgyi) async {
     final _db = await _dbHelper.database;
     final teacher = sayadawgyi ? "1" : "2";
 
     String dbQuery =
-        '''Select residentDetails.id_code, residentDetails.dhamma_name, residentDetails.kuti, residentDetails.country, interviews.stime 
+        '''Select residentDetails.id_code, residentDetails.dhamma_name, residentDetails.passport_name, residentDetails.kuti, residentDetails.country, interviews.stime 
           FROM residentDetails, interviews
           WHERE residentDetails.id_code = interviews.id_code AND teacher = '$teacher' AND stime = '${dt.day}/${dt.month}/${dt.year}'
           ORDER BY interviews.real_time DESC''';
 
     List<Map> list = await _db.rawQuery(dbQuery);
     return list
-        .map((interviewdetails) => KutiGroup.fromJson(interviewdetails))
+        .map((interviewdetails) => InterviewDetails.fromJson(interviewdetails))
         .toList();
   }
 
-  Future<List<KutiGroup>> getInterviewDatesByID(
+  Future<List<InterviewDetails>> getInterviewDatesByID(
       String idCode, bool sayadawgyi) async {
     //await initDatabase();
     final _db = await _dbHelper.database;
@@ -72,7 +72,7 @@ class InterviewQueries {
 
     List<Map> list = await _db.rawQuery(dbQuery);
     return list // reuse this map because null safety all fields will be na but the ones we are looking for
-        .map((interviewdetails) => KutiGroup.fromJson(interviewdetails))
+        .map((interviewdetails) => InterviewDetails.fromJson(interviewdetails))
         .toList();
 
     //return list.map((trail) => Trail.fromJson(trail)).toList();

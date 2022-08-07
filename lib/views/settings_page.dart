@@ -153,7 +153,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Future _writeCSVFile() async {
     final dbService = InterviewQueries();
     String csv = "id_code\tteacher\tstime\treal_time\n";
-    List<KutiGroup> rows = await dbService.getAllInterviewDetails();
+    List<InterviewDetails> rows = await dbService.getAllInterviewDetails();
 
     for (int i = 0; i < rows.length; i++) {
       csv +=

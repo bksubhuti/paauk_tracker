@@ -93,7 +93,7 @@ class _HistoryState extends State<History> {
                   ),
                   SingleChildScrollView(
                     physics: const ScrollPhysics(),
-                    child: FutureBuilder<List<KutiGroup>>(
+                    child: FutureBuilder<List<InterviewDetails>>(
                         future: dbService.getInterviewDetailsByDate(
                             _dt, Prefs.sayadawgyi),
                         builder: (context, snapshot) {
@@ -108,25 +108,28 @@ class _HistoryState extends State<History> {
                               shrinkWrap: true,
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) {
+                                final adjustedName =
+                                    snapshot.data![index].dhamma_name != "n/a"
+                                        ? snapshot.data![index].dhamma_name
+                                        : snapshot.data![index].passport_name;
+
                                 return Card(
                                   child: ListTile(
                                     onTap: () {
+                                      final adjustedName = snapshot
+                                                  .data![index].dhamma_name !=
+                                              "n/a"
+                                          ? snapshot.data![index].dhamma_name
+                                          : snapshot.data![index].passport_name;
+
                                       showDateHistoryDialog(
                                         context,
                                         snapshot.data![index].id_code,
-                                        snapshot.data![index].dhamma_name,
+                                        adjustedName,
                                       );
-                                      /*
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SecondRoute()),
-                                      );
-                                      */
                                     },
                                     title: ColoredText(
-                                        "${snapshot.data![index].dhamma_name}, ${snapshot.data![index].kuti} ",
+                                        "$adjustedName, ${snapshot.data![index].kuti} ",
                                         style: TextStyle(
                                           fontSize: 17,
                                           color: (Prefs.lightThemeOn)

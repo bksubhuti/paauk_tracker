@@ -4,10 +4,10 @@
 
 import 'dart:convert';
 
-List<KutiGroup> interviewDetailsFromJson(String str) =>
+List<KutiGroup> kutiGroupDetailsFromJson(String str) =>
     List<KutiGroup>.from(json.decode(str).map((x) => KutiGroup.fromJson(x)));
 
-String interviewDetailsToJson(List<KutiGroup> data) =>
+String kutiGroupDetailsToJson(List<KutiGroup> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class KutiGroup {

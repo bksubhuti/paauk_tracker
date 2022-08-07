@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:paauk_tracker/src/models/prefs.dart';
 
-import '../colored_text.dart';
+import 'package:paauk_tracker/src/models/colored_text.dart';
 
 class KutiGroupTile extends StatelessWidget {
   const KutiGroupTile(
@@ -14,21 +13,23 @@ class KutiGroupTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SizedBox(
         width: width,
         height: 30,
         child: Card(
           child: InkWell(
+              highlightColor: Theme.of(context).highlightColor,
+              splashColor: Theme.of(context).primaryColor,
               onTap: onTap,
-              child: Center(
+              radius: 22,
+              borderRadius: BorderRadius.circular(20),
+              child: Ink(
+                color: const Color.fromARGB(255, 247, 232, 235),
                 child: ColoredText(
                   label,
                   style: TextStyle(
-                    fontSize: 12,
-                    color: (Prefs.lightThemeOn)
-                        ? Theme.of(context).primaryColor
-                        : Colors.white,
+                    fontSize: 15,
+                    color: Theme.of(context).appBarTheme.foregroundColor,
                   ),
                   textAlign: TextAlign.center,
                 ),

@@ -5,7 +5,7 @@ import 'package:paauk_tracker/src/models/resident_details.dart';
 import 'package:paauk_tracker/src/services/get_resident_details.dart';
 import 'package:paauk_tracker/src/models/prefs.dart';
 
-import '../src/models/kuti_group_selector/kuti_group_selector.dart';
+import '../src/widgets/kuti_group_selector/kuti_group_selector.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({Key? key}) : super(key: key);
@@ -18,8 +18,6 @@ class _SignInViewState extends State<SignInView> {
   final dbService = GetResidentDetails();
 
   String searchKey = "A";
-
-  String _kutiGroup = 'A';
 
   final List<String> _kutiGroupItems = <String>[];
 
@@ -66,7 +64,6 @@ class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     _addKutiGroupItemsToMemberList();
-    int idx = 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -91,420 +88,29 @@ class _SignInViewState extends State<SignInView> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                   child: Row(
-                    children: [
-                      const SizedBox(height: 6.0),
-                      const ColoredText("Kuti Group:",
+                    children: const [
+                      SizedBox(height: 6.0),
+                      ColoredText("Kuti Group:",
                           style: TextStyle(
                             fontSize: 16,
                           )),
-                      const SizedBox(
+                      SizedBox(
                         width: 10.0,
                         height: 20,
-                      ), /*
-                      DropdownButton<String>(
-                          value: _kutiGroup,
-                          style: TextStyle(
-                            color: (Prefs.lightThemeOn)
-                                ? Theme.of(context).primaryColor
-                                : Colors.white,
-                          ),
-                          isDense: true,
-                          onChanged: (newValue) {
-                            setState(() {
-                              _kutiGroup = newValue!;
-                              searchKey = newValue;
-
-                              //                                _dawnMethodItems.indexOf(newValue!);
-                            });
-                          },
-                          items: _kutiGroupItems.map<DropdownMenuItem<String>>(
-                            (String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: ColoredText(
-                                  value,
-                                  style: TextStyle(
-                                      color: (Prefs.lightThemeOn)
-                                          ? Theme.of(context).primaryColor
-                                          : Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              );
-                            },
-                          ).toList()),*/
+                      ),
                     ],
                   ),
                 ),
               ),
-              /*
-              const SizedBox(height: 15),
-              TextField(
-                style: TextStyle(
-                    color: (Prefs.lightThemeOn)
-                        ? Theme.of(context).primaryColor
-                        : null,
-                    fontSize: 20),
-                decoration: const InputDecoration(
-                    labelText: "Search For Kuti",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-                controller: controller,
-                onChanged: (String data) {
-                  setState(() {
-                    searchKey = data;
-                  });
-                  //  print(data);
-                },
-              ),*/
               KutiGroupSelector(
                 kutiGroupItems: _kutiGroupItems,
                 onTap: (kutiGroup) {
+                  setState(() {
+                    searchKey = kutiGroup;
+                  });
                   debugPrint("Tapped $kutiGroup");
                 },
               ),
-
-              //GridView.builder(
-          //physics: NeverScrollableScrollPhysics(),
-          //shrinkWrap: true,
-          // padding: EdgeInsets.all(16.0),
-        //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //     crossAxisCount: 8,
-        //     mainAxisSpacing: 4.0,
-        //     crossAxisSpacing: 8.0,
-        //     childAspectRatio: 1,
-        //     mainAxisExtent: 80
-        //   ),
-        //   itemCount: _kutiGroupItems.length,
-        //   itemBuilder: (context, index) {
-        //     return
-        //       SizedBox(
-        //         height: 70,
-        //         width: 70,
-        //         child: Card(
-        //           semanticContainer: true,
-        //           child: Center(
-        //             child: ColoredText("${_kutiGroupItems[index]}",
-        //               style: TextStyle(
-        //                 fontSize: 12,
-        //                 color: (Prefs.lightThemeOn)
-        //                     ? Theme.of(context).primaryColor
-        //                     : Colors.white,
-        //
-        //               ), textAlign: TextAlign.center,),
-        //           ),   // onTap: () => _onTapCallback(book)
-        //         ),
-        //       );
-        //   },
-        // ),
-              /*
-              Wrap(
-                spacing: 8.0, // gap between adjacent chips
-                runSpacing: 4.0, // gap between lines
-                children: <Widget>[
-                  SizedBox(
-                    height: 50,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[0]}'!;
-                            searchKey = '${_kutiGroupItems[0]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[1]}'!;
-                            searchKey = '${_kutiGroupItems[1]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[2]}'!;
-                            searchKey = '${_kutiGroupItems[2]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[3]}'!;
-                            searchKey = '${_kutiGroupItems[3]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[4]}'!;
-                            searchKey = '${_kutiGroupItems[4]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[5]}'!;
-                            searchKey = '${_kutiGroupItems[5]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[6]}'!;
-                            searchKey = '${_kutiGroupItems[6]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[7]}'!;
-                            searchKey = '${_kutiGroupItems[7]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[8]}'!;
-                            searchKey = '${_kutiGroupItems[8]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[9]}'!;
-                            searchKey = '${_kutiGroupItems[9]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[10]}'!;
-                            searchKey = '${_kutiGroupItems[10]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[11]}'!;
-                            searchKey = '${_kutiGroupItems[11]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[12]}'!;
-                            searchKey = '${_kutiGroupItems[12]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[13]}'!;
-                            searchKey = '${_kutiGroupItems[13]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[14]}'!;
-                            searchKey = '${_kutiGroupItems[14]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[15]}'!;
-                            searchKey = '${_kutiGroupItems[15]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[16]}'!;
-                            searchKey = '${_kutiGroupItems[16]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[17]}'!;
-                            searchKey = '${_kutiGroupItems[17]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[18]}'!;
-                            searchKey = '${_kutiGroupItems[18]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                    width: 80,
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          setState(() {
-                            _kutiGroup = '${_kutiGroupItems[19]}'!;
-                            searchKey = '${_kutiGroupItems[19]}';
-                          });
-                        },
-                        title: Text('${_kutiGroupItems[idx++]}'),
-                      ),
-                    ),
-                  ),
-                ],
-              ),*/
-
               SingleChildScrollView(
                 physics: const ScrollPhysics(),
                 child: FutureBuilder<List<ResidentDetails>>(
@@ -563,7 +169,22 @@ class _SignInViewState extends State<SignInView> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Sign In'),
+          title: Column(
+            children: [
+              const Icon(
+                Icons.how_to_reg,
+                size: 50,
+                color: Color.fromARGB(255, 69, 8, 3),
+              ),
+              ColoredText("Sign In",
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: (Prefs.lightThemeOn)
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
+                  )),
+            ],
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -592,14 +213,16 @@ class _SignInViewState extends State<SignInView> {
             ),
           ),
           actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () {
+            ElevatedButton.icon(
+              icon: const Icon(Icons.cancel),
+              label: const Text('Cancel'),
+              onPressed: () async {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
-              child: const Text('Approve'),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.check_box),
+              label: const Text('Approve'),
               onPressed: () async {
                 await iq.addInterviewRecord(iDCode, Prefs.sayadawgyi);
                 Navigator.of(context).pop();
@@ -611,6 +234,3 @@ class _SignInViewState extends State<SignInView> {
     );
   }
 }
-
-
-

@@ -4,15 +4,14 @@
 
 import 'dart:convert';
 
-List<InterviewDetails> interviewDetailsFromJson(String str) =>
-    List<InterviewDetails>.from(
-        json.decode(str).map((x) => InterviewDetails.fromJson(x)));
+List<KutiGroup> interviewDetailsFromJson(String str) =>
+    List<KutiGroup>.from(json.decode(str).map((x) => KutiGroup.fromJson(x)));
 
-String interviewDetailsToJson(List<InterviewDetails> data) =>
+String interviewDetailsToJson(List<KutiGroup> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class InterviewDetails {
-  InterviewDetails(
+class KutiGroup {
+  KutiGroup(
       // ignore: non_constant_identifier_names
       {this.dhamma_name = "",
       this.kuti = "",
@@ -38,8 +37,8 @@ class InterviewDetails {
   int real_time;
   String teacher;
 
-  factory InterviewDetails.fromJson(Map<dynamic, dynamic> json) {
-    return InterviewDetails(
+  factory KutiGroup.fromJson(Map<dynamic, dynamic> json) {
+    return KutiGroup(
       dhamma_name: json["dhamma_name"] ?? "n/a",
       kuti: json["kuti"] ?? "n/a",
       country: json["country"] ?? "n/a",

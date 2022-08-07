@@ -80,8 +80,11 @@ class _HomeState extends State<Home> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ElevatedButton(
-                    child: const Text('Sign In'),
+                  FloatingActionButton.extended(
+                    label: const Text('Sign In'),
+                    icon: const Icon(Icons.app_registration),
+                    backgroundColor:
+                        Theme.of(context).appBarTheme.backgroundColor,
                     onPressed: () async {
                       await Navigator.push(
                         context,
@@ -95,7 +98,7 @@ class _HomeState extends State<Home> {
                   ),
                   SingleChildScrollView(
                     physics: const ScrollPhysics(),
-                    child: FutureBuilder<List<InterviewDetails>>(
+                    child: FutureBuilder<List<KutiGroup>>(
                         future: dbService.getInterviewDetails(
                             dummy, Prefs.sayadawgyi),
                         builder: (context, snapshot) {
@@ -124,6 +127,13 @@ class _HomeState extends State<Home> {
                                           snapshot.data![index].country +
                                               "," +
                                               snapshot.data![index].country),
+                                      onLongPress: () {
+                                        _showDeleteItemDialog(
+                                            snapshot.data![index].id_code,
+                                            snapshot.data![index].dhamma_name,
+                                            snapshot.data![index].kuti,
+                                            snapshot.data![index].country);
+                                      },
                                       onTap: () {
                                         showDateHistoryDialog(
                                           context,
@@ -139,6 +149,82 @@ class _HomeState extends State<Home> {
               )),
         ]),
       ),
+    );
+  }
+
+  Future<void> _showDeleteItemDialog(
+      String iDCode, String name, String kuti, String country) async {
+    final iq = InterviewQueries();
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Column(
+            children: [
+              const Icon(
+                Icons.delete,
+                size: 50,
+                color: Color.fromARGB(255, 69, 8, 3),
+              ),
+              ColoredText("Are You Sure Delete?",
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: (Prefs.lightThemeOn)
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
+                  )),
+            ],
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                ColoredText(name,
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: (Prefs.lightThemeOn)
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    )),
+                ColoredText("Kuti = $kuti",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: (Prefs.lightThemeOn)
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    )),
+                ColoredText("$country ",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: (Prefs.lightThemeOn)
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    )),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton.icon(
+              icon: const Icon(Icons.cancel),
+              label: const Text('Cancel'),
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.delete),
+              label: const Text('Delete'),
+              onPressed: () async {
+                await iq.deleteInterviewRecord(iDCode, Prefs.sayadawgyi);
+                setState(() {
+                  dummy++;
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

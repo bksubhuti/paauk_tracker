@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.paauk_tracker">
    <application
-        android:label="paauk_tracker"
+        android:label="Pa Auk Tracker"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

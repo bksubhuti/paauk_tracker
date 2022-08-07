@@ -17,7 +17,7 @@ class SecondRoute extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
-        child: FutureBuilder<List<InterviewDetails>>(
+        child: FutureBuilder<List<KutiGroup>>(
             future: dbService.getInterviewDatesByID(iDCode, Prefs.sayadawgyi),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -64,7 +64,7 @@ Future<void> showDateHistoryDialog(
           width: double.maxFinite,
           child: SingleChildScrollView(
             physics: const ScrollPhysics(),
-            child: FutureBuilder<List<InterviewDetails>>(
+            child: FutureBuilder<List<KutiGroup>>(
                 future:
                     dbService.getInterviewDatesByID(iDCode, Prefs.sayadawgyi),
                 builder: (context, snapshot) {

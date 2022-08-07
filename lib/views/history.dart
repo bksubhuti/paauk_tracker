@@ -93,7 +93,7 @@ class _HistoryState extends State<History> {
                   ),
                   SingleChildScrollView(
                     physics: const ScrollPhysics(),
-                    child: FutureBuilder<List<InterviewDetails>>(
+                    child: FutureBuilder<List<KutiGroup>>(
                         future: dbService.getInterviewDetailsByDate(
                             _dt, Prefs.sayadawgyi),
                         builder: (context, snapshot) {

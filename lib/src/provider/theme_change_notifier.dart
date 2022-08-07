@@ -5,6 +5,7 @@ import 'package:paauk_tracker/src/models/theme_data.dart';
 
 class ThemeChangeNotifier extends ChangeNotifier {
   ThemeMode themeMode = (Prefs.lightThemeOn) ? ThemeMode.light : ThemeMode.dark;
+  // ignore: unused_field
   int _themeIndex = 1;
 
   set themeIndex(int val) {

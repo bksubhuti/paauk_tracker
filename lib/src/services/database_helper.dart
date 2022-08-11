@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:paauk_tracker/src/models/prefs.dart';
 
 class DatabaseHelper {
   DatabaseHelper._internal();
@@ -23,6 +24,7 @@ class DatabaseHelper {
 
     _database = await openDatabase('assets/paauk_tracker.db');
     var databasePath = await getDatabasesPath();
+    Prefs.databaseDir = databasePath;
     var path = join(databasePath, 'paauk_tracker.db');
 
     //Check if DB exists

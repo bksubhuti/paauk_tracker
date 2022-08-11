@@ -137,9 +137,7 @@ class _HistoryState extends State<History> {
                                               : Colors.white,
                                         )),
                                     subtitle: ColoredText(
-                                        snapshot.data![index].country +
-                                            "," +
-                                            snapshot.data![index].country),
+                                        snapshot.data![index].country),
                                   ),
                                 );
                               });

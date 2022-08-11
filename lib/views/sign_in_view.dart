@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:paauk_tracker/src/models/colored_text.dart';
 import 'package:paauk_tracker/src/services/interview_queries.dart';
 import 'package:paauk_tracker/src/models/resident_details.dart';
 import 'package:paauk_tracker/src/services/get_resident_details.dart';
 import 'package:paauk_tracker/src/models/prefs.dart';
+import 'package:paauk_tracker/src/widgets/yogi_avatar.dart';
 
 import '../src/widgets/kuti_group_selector/kuti_group_selector.dart';
 
@@ -74,14 +76,6 @@ class _SignInViewState extends State<SignInView> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Go back!'),
-                ),
-              ),
               Card(
                 margin: const EdgeInsets.fromLTRB(15, 0, 15, 10),
                 elevation: 2,
@@ -90,10 +84,10 @@ class _SignInViewState extends State<SignInView> {
                   child: Row(
                     children: const [
                       SizedBox(height: 6.0),
-                      ColoredText("Kuti Group:",
+                      ColoredText(
+                          "Select Kuṭi Group: ကျောင်းအုပ်စု ရွေးချယ်ပါ-",
                           style: TextStyle(
-                            fontSize: 16,
-                          )),
+                              fontSize: 16, fontWeight: FontWeight.bold)),
                       SizedBox(
                         width: 10.0,
                         height: 20,
@@ -127,8 +121,14 @@ class _SignInViewState extends State<SignInView> {
                           shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
+                            final adjustedName =
+                                snapshot.data![index].dhamma_name != "n/a"
+                                    ? snapshot.data![index].dhamma_name
+                                    : snapshot.data![index].passport_name;
                             return Card(
                               child: ListTile(
+                                leading: YogiCircleAvatar(
+                                    yogiID: snapshot.data![index].id_code),
                                 onTap: () async {
                                   await _showSignInDialog(
                                       snapshot.data![index].id_code,
@@ -137,8 +137,7 @@ class _SignInViewState extends State<SignInView> {
                                       snapshot.data![index].country);
                                   Navigator.of(context).pop();
                                 }, // on tap
-                                title: ColoredText(
-                                    "${snapshot.data![index].kuti}, ${snapshot.data![index].country} ",
+                                title: ColoredText(snapshot.data![index].kuti,
                                     style: TextStyle(
                                       fontSize: 17,
                                       color: (Prefs.lightThemeOn)
@@ -146,9 +145,7 @@ class _SignInViewState extends State<SignInView> {
                                           : Colors.white,
                                     )),
                                 subtitle: ColoredText(
-                                    snapshot.data![index].dhamma_name +
-                                        "," +
-                                        snapshot.data![index].country),
+                                    "$adjustedName,  ${snapshot.data![index].country}"),
                               ),
                             );
                           });
@@ -174,7 +171,7 @@ class _SignInViewState extends State<SignInView> {
               const Icon(
                 Icons.how_to_reg,
                 size: 50,
-                color: Color.fromARGB(255, 69, 8, 3),
+                color: Colors.red,
               ),
               ColoredText("Sign In",
                   style: TextStyle(
@@ -188,6 +185,7 @@ class _SignInViewState extends State<SignInView> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
+                YogiCircleAvatar(yogiID: iDCode),
                 ColoredText(name,
                     style: TextStyle(
                       fontSize: 24,
@@ -233,4 +231,15 @@ class _SignInViewState extends State<SignInView> {
       },
     );
   }
+
+  /*Widget _getSubhuti({String name = "dd"}) {
+    //Image image = decodeJpg(File('test.jpg').readAsBytesSync());
+
+    //   return CircleAvatar(child: Image.asset('assets/meditation_icon.png'));
+
+    return CircleAvatar(
+      radius: 38.0,
+      child: Image.file(File('${Prefs.databaseDir}/subhuti1.png')),
+    );
+  }*/
 }

@@ -10,6 +10,7 @@ const String litThemeIndex = "themeIndex";
 const String litLightThemeOn = "lightThemeOn";
 const String litLocked = "locked";
 const String litSayadawgyi = "saydawgyi";
+const String litDatabaseDir = "databaseDir";
 
 // default pref values
 const int defaultLocaleVal = 0;
@@ -17,6 +18,7 @@ const int defaultThemeIndex = 24;
 const bool defaultLightThemeOn = true;
 const bool defaultLocked = true;
 const bool defaultSaydawgyi = true;
+const String defaultDatabaseDir = "555";
 
 class Prefs {
   static late final SharedPreferences instance;
@@ -43,4 +45,9 @@ class Prefs {
   static bool get sayadawgyi =>
       instance.getBool(litSayadawgyi) ?? defaultLocked;
   static set sayadawgyi(bool value) => instance.setBool(litSayadawgyi, value);
+
+  static String get databaseDir =>
+      instance.getString(litDatabaseDir) ?? defaultDatabaseDir;
+  static set databaseDir(String value) =>
+      instance.setString(litDatabaseDir, value);
 }

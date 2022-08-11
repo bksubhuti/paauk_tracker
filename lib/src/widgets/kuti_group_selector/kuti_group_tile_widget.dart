@@ -15,7 +15,7 @@ class KutiGroupTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         width: width,
-        height: 30,
+        height: 40,
         child: Card(
           child: InkWell(
               highlightColor: Theme.of(context).highlightColor,
@@ -25,13 +25,16 @@ class KutiGroupTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               child: Ink(
                 color: const Color.fromARGB(255, 247, 232, 235),
-                child: ColoredText(
-                  label,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Theme.of(context).appBarTheme.foregroundColor,
+                child: Center(
+                  child: ColoredText(
+                    label,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).appBarTheme.foregroundColor,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               )),
         ));

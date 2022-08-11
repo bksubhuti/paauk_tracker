@@ -50,6 +50,8 @@ dependencies:
   share_plus: ^4.0.10
   csv: ^5.0.1
   flutter_launcher_icons: ^0.9.3
+  http: ^0.13.5
+  archive: ^3.3.1
 
 flutter_icons:
   image_path: "assets/icon.png"
@@ -86,6 +88,9 @@ flutter:
     - assets/pa_auk_sayadawgyi.png
     - assets/sayadaw_kumarabhivamsa.png
     - assets/icon.png
+    - assets/subhuti.png
+    - assets/meditation_icon.png
+    
 
   
   # An image asset can refer to one or more resolution-specific "variants", see

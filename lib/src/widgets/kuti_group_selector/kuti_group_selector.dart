@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'kuti_group_tile_widget.dart';
 
 class KutiGroupSelector extends StatelessWidget {
-  const KutiGroupSelector({Key? key,
-    required List<String> kutiGroupItems,
-    this.columnsCount = 5,
-    this.onTap})
+  const KutiGroupSelector(
+      {Key? key,
+      required List<String> kutiGroupItems,
+      this.columnsCount = 5,
+      this.onTap})
       : _kutiGroupItems = kutiGroupItems,
         super(key: key);
 
@@ -16,28 +17,22 @@ class KutiGroupSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    var screenWidth = MediaQuery.of(context).size.width;
     const padding = 20;
     var availableWidth = screenWidth - 2 * padding;
     var width = availableWidth / columnsCount;
-    return Wrap(
-        children: _getTiles(width)
-    );
+    return Wrap(children: _getTiles(width));
   }
 
   List<Widget> _getTiles(width) {
     return _kutiGroupItems
-        .map((String kutiGroup) =>
-        KutiGroupTile(
-          label: kutiGroup,
-          width: width,
-          onTap: () {
-            onTap?.call(kutiGroup);
-          },
-        ))
+        .map((String kutiGroup) => KutiGroupTile(
+              label: kutiGroup,
+              width: 70,
+              onTap: () {
+                onTap?.call(kutiGroup);
+              },
+            ))
         .toList();
   }
 }

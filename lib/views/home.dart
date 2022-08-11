@@ -9,6 +9,7 @@ import 'package:paauk_tracker/src/models/colored_text.dart';
 import 'package:paauk_tracker/src/services/interview_queries.dart';
 import 'package:paauk_tracker/views/sign_in_view.dart';
 import 'package:paauk_tracker/views/show_date_history_dlg.dart';
+import 'package:paauk_tracker/src/widgets/yogi_avatar.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -120,8 +121,10 @@ class _HomeState extends State<Home> {
 
                                 return Card(
                                   child: ListTile(
-                                      title: ColoredText(
-                                          "$adjustedName, ${snapshot.data![index].kuti} ",
+                                      leading: YogiCircleAvatar(
+                                          yogiID:
+                                              snapshot.data![index].id_code),
+                                      title: ColoredText("$adjustedName",
                                           style: TextStyle(
                                             fontSize: 17,
                                             color: (Prefs.lightThemeOn)
@@ -129,9 +132,7 @@ class _HomeState extends State<Home> {
                                                 : Colors.white,
                                           )),
                                       subtitle: ColoredText(
-                                          snapshot.data![index].country +
-                                              "," +
-                                              snapshot.data![index].country),
+                                          "${snapshot.data![index].kuti},  ${snapshot.data![index].country}"),
                                       onLongPress: () {
                                         final adjustedName = snapshot
                                                     .data![index].dhamma_name !=

@@ -69,4 +69,16 @@ class GetResidentDetails {
 
     //return list.map((trail) => Trail.fromJson(trail)).toList();
   }
+
+  Future addResidentRecords(String dbQuery) async {
+    final _db = await _dbHelper.database;
+
+    await _db.rawQuery(dbQuery);
+  }
+
+  Future deleteAllRecords() async {
+    final _db = await _dbHelper.database;
+
+    await _db.rawQuery("Delete  from residentDetails");
+  }
 }

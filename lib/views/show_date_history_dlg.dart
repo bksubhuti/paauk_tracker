@@ -3,6 +3,7 @@ import 'package:paauk_tracker/src/models/colored_text.dart';
 import 'package:paauk_tracker/src/services/interview_queries.dart';
 import 'package:paauk_tracker/src/models/prefs.dart';
 import 'package:paauk_tracker/src/models/interview_details.dart';
+import 'package:paauk_tracker/src/widgets/yogi_avatar.dart';
 
 class SecondRoute extends StatelessWidget {
   SecondRoute({String? iDCode, Key? key}) : super(key: key);
@@ -79,9 +80,17 @@ Future<void> showDateHistoryDialog(
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
+                        String s = snapshot.data![index].stime;
+                        final dDayLocal = DateTime(
+                            int.parse(s.substring(0, 4)),
+                            int.parse(s.substring(4, 6)),
+                            int.parse(s.substring(5, 7)));
+
                         return Card(
                           child: ListTile(
-                            title: ColoredText(snapshot.data![index].stime,
+                            leading: YogiCircleAvatar(yogiID: iDCode),
+                            title: ColoredText(
+                                '${dDayLocal.day}/${dDayLocal.month}/${dDayLocal.year}',
                                 style: TextStyle(
                                   fontSize: 17,
                                   color: (Prefs.lightThemeOn)

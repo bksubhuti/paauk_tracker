@@ -7,6 +7,7 @@ import 'package:paauk_tracker/src/models/colored_text.dart';
 // import 'package:paauk_tracker/src/models/resident_details.dart';
 ///import 'package:paauk_tracker/src/services/get_resident_details.dart';
 import 'package:paauk_tracker/src/services/interview_queries.dart';
+import 'package:paauk_tracker/src/widgets/yogi_avatar.dart';
 import 'package:paauk_tracker/views/show_date_history_dlg.dart';
 
 class History extends StatefulWidget {
@@ -128,6 +129,8 @@ class _HistoryState extends State<History> {
                                         adjustedName,
                                       );
                                     },
+                                    leading: YogiCircleAvatar(
+                                        yogiID: snapshot.data![index].id_code),
                                     title: ColoredText(
                                         "$adjustedName, ${snapshot.data![index].kuti} ",
                                         style: TextStyle(

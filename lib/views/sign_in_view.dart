@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:paauk_tracker/src/models/colored_text.dart';
 import 'package:paauk_tracker/src/services/interview_queries.dart';
 import 'package:paauk_tracker/src/models/resident_details.dart';
@@ -231,15 +230,4 @@ class _SignInViewState extends State<SignInView> {
       },
     );
   }
-
-  /*Widget _getSubhuti({String name = "dd"}) {
-    //Image image = decodeJpg(File('test.jpg').readAsBytesSync());
-
-    //   return CircleAvatar(child: Image.asset('assets/meditation_icon.png'));
-
-    return CircleAvatar(
-      radius: 38.0,
-      child: Image.file(File('${Prefs.databaseDir}/subhuti1.png')),
-    );
-  }*/
 }

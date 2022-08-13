@@ -15,7 +15,7 @@ Future<bool> getYogiFileExists(String yogiID) async {
 }
 
 class YogiCircleAvatar extends StatelessWidget {
-  YogiCircleAvatar({Key? key, required this.yogiID}) : super(key: key);
+  const YogiCircleAvatar({Key? key, required this.yogiID}) : super(key: key);
   final String yogiID;
 
   //     _exists = await getexists(widget.yogiID);
@@ -29,7 +29,7 @@ class YogiCircleAvatar extends StatelessWidget {
           future: getYogiFileExists(yogiID),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (!snapshot.hasData) {
                 return Container();
@@ -49,7 +49,7 @@ class YogiCircleAvatar extends StatelessWidget {
                 }
               }
             }
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }),
     );
   }

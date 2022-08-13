@@ -1,6 +1,4 @@
 // To parse this JSON data, do
-//
-//     final WorldCities = WorldCitiesFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -24,8 +22,8 @@ class InterviewDetails {
       // ignore: non_constant_identifier_names
       this.stime = "",
       // ignore: non_constant_identifier_names
-      this.real_time = 0,
-      this.teacher = ""});
+      this.teacher = "",
+      this.pk = 0});
 
   // ignore: non_constant_identifier_names
   String dhamma_name;
@@ -39,8 +37,8 @@ class InterviewDetails {
   // ignore: non_constant_identifier_names
   String stime;
   // ignore: non_constant_identifier_names
-  int real_time;
   String teacher;
+  int pk;
 
   factory InterviewDetails.fromJson(Map<dynamic, dynamic> json) {
     return InterviewDetails(
@@ -50,8 +48,8 @@ class InterviewDetails {
       country: json["country"] ?? "n/a",
       id_code: json["id_code"] ?? "n/a",
       stime: json["stime"] ?? "n/a",
-      real_time: json["real_time"] ?? 0,
       teacher: json["teacher"] ?? "n/a",
+      pk: json["pk"] ?? 0,
     );
   }
 
@@ -62,7 +60,7 @@ class InterviewDetails {
         "country: json": country,
         "iDCode": id_code,
         "stime": stime,
-        "real_time": real_time,
         "teacher": teacher,
+        "pk": pk,
       };
 }

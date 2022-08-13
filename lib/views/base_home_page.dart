@@ -30,7 +30,7 @@ class HomePageContainerState extends State<HomePageContainer> {
       Platform.isMacOS || Platform.isWindows || Platform.isLinux;
 
   late PageController _pageController;
-  final String title = "Buddhist Sun";
+  final String title = "Pa-Auk Tracker";
 
   void goToHome() {
     _currentIndex = 0;
@@ -111,8 +111,7 @@ class HomePageContainerState extends State<HomePageContainer> {
                   CircleAvatar(
                     backgroundColor:
                         Theme.of(context).appBarTheme.backgroundColor,
-                    backgroundImage:
-                        const AssetImage("assets/paauk_tracker.png"),
+                    backgroundImage: const AssetImage("assets/icon.png"),
                     radius: 40.0,
                   ),
                 ],
@@ -232,7 +231,8 @@ class HomePageContainerState extends State<HomePageContainer> {
             fontSize: 15,
           )),
       content: SingleChildScrollView(
-        child: ColoredText(AppLocalizations.of(context)!.about_content,
+        child: ColoredText(
+            "Pa-Auk Tracker was created to help keep track of the meditation yogi's and their interviews without the need to type the data into the database from exersise books. ",
             style: const TextStyle(
               fontSize: 16,
             )),
@@ -278,20 +278,7 @@ class HomePageContainerState extends State<HomePageContainer> {
              https://github.com/flutter/flutter/blob/master/LICENSE '''
             "\n\n"
             '''
-sun picture derived by creativecommons cc-sa-attrib
-Own self; User:Bruno_Vallette, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons
-
-
-citydb.db created from source information that is creative commons attrib
-https://simplemaps.com/data/world-cities'''
-            '''
 External Packages used:  (see pub.dev)
-
-  flutter_spinkit: "^5.0.0"
-  https://pub.flutter-io.cn/packages?q=flutter_spinkit
-
-  solar_calculator: ^1.0.2
-  https://pub.flutter-io.cn/packages/solar_calculator
 
   path_provider: ^2.0.2
   https://pub.flutter-io.cn/packages/path_provider
@@ -305,27 +292,9 @@ External Packages used:  (see pub.dev)
   shared_preferences: ^2.0.6
   https://pub.flutter-io.cn/packages/shared_preferences
 
-  geolocator: ^7.4.0
-  https://pub.flutter-io.cn/packages/geolocator
-
   bottom_navy_bar: ^6.0.0
   https://pub.flutter-io.cn/packages/bottom_navy_bar
 
-  flutter_tts: ^3.2.2
-  https://pub.flutter-io.cn/packages/flutter_tts
-
-  wakelock: ^0.5.3+3
-  https://pub.flutter-io.cn/packages/wakelock
-
-  flutter_background: ^1.0.2+1
-  https://pub.flutter-io.cn/packages/flutter_background
-
-  motion_toast: ^1.3.0
-  https://pub.flutter-io.cn/packages/motion_toast
-
-
-<a href="https://iconscout.com/icons/moon" target="_blank">Moon Icon</a> by <a href="https://iconscout.com/contributors/daniel-bruce">Daniel Bruce</a> on <a href="https://iconscout.com">Iconscout</a>
-sun by Alexandra Hawkhead from the Noun Project
 
 
 ''',
@@ -365,7 +334,7 @@ sun by Alexandra Hawkhead from the Noun Project
     AlertDialog help = AlertDialog(
       title: ColoredText(AppLocalizations.of(context)!.help),
       content: SingleChildScrollView(
-        child: ColoredText(AppLocalizations.of(context)!.help_content,
+        child: ColoredText("Ask someone for help",
             style: const TextStyle(
               fontSize: 16,
             )),

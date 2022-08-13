@@ -124,7 +124,7 @@ class _HomeState extends State<Home> {
                                       leading: YogiCircleAvatar(
                                           yogiID:
                                               snapshot.data![index].id_code),
-                                      title: ColoredText("$adjustedName",
+                                      title: ColoredText(adjustedName,
                                           style: TextStyle(
                                             fontSize: 17,
                                             color: (Prefs.lightThemeOn)

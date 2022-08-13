@@ -106,7 +106,13 @@ class _AdminViewState extends State<AdminView> {
                   backgroundColor:
                       Theme.of(context).appBarTheme.backgroundColor,
                   onPressed: () async {
+                    setState(() {
+                      _downloading = true;
+                    });
                     await fetchResidentSQL();
+                    setState(() {
+                      _downloading = false;
+                    });
                   },
                 ),
                 const SizedBox(height: 20),
@@ -117,7 +123,7 @@ class _AdminViewState extends State<AdminView> {
                   backgroundColor:
                       Theme.of(context).appBarTheme.backgroundColor,
                   onPressed: () async {
-                    _syncInterviews();
+                    _syncInterviews(context);
                   },
                 ),
                 const SizedBox(height: 10),
@@ -292,7 +298,7 @@ class _AdminViewState extends State<AdminView> {
     });
   }
 
-  Future _syncInterviews() async {
+  Future _syncInterviews(BuildContext context) async {
 //List<Interview> iSyncList = await getInterviewSyncItems();
 // write the list out
 //
@@ -329,8 +335,23 @@ class _AdminViewState extends State<AdminView> {
     syncList.clear();
     syncList = await dbService.getSyncInterviewDetails();
     if (syncList.isEmpty) {
+      String data = await DefaultAssetBundle.of(context)
+          .loadString("assets/interviews_testing.json");
+
+/*  
+//      final jsonResult<dynamic,String> = jsonDecode(data); //latest Dart
+
+//      final list = jsonDecode(data);
+  //    debugPrint(list.toString());
+    list. // reuse this map because null safety all fields will be na but the ones we are looking for
+          .map(
+              (interviewdetails) => InterviewDetails.fromJson(interviewdetails))
+          .toList();
+//      debugPrint(jsonResult);
+//      debugPrint(jsonResult.toString());
       // get all records from interviews from server
 //    https://apply.paauksociety.org/app_interview.php?id_code=de8f7367&stime=1660198571139&teacher=Sayadawgyi
+*/
 
     }
   }

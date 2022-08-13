@@ -91,6 +91,7 @@ flutter:
     - assets/icon.png
     - assets/subhuti.png
     - assets/meditation_icon.png
+    - assets/interviews_testing.json
     
 
   

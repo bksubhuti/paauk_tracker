@@ -81,16 +81,13 @@ Future<void> showDateHistoryDialog(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         String s = snapshot.data![index].stime;
-                        final dDayLocal = DateTime(
-                            int.parse(s.substring(0, 4)),
-                            int.parse(s.substring(4, 6)),
-                            int.parse(s.substring(5, 7)));
+                        String sFormattedDate =
+                            "${s.substring(6, 8)}/${s.substring(4, 6)}/${s.substring(0, 4)}";
 
                         return Card(
                           child: ListTile(
                             leading: YogiCircleAvatar(yogiID: iDCode),
-                            title: ColoredText(
-                                '${dDayLocal.day}/${dDayLocal.month}/${dDayLocal.year}',
+                            title: ColoredText(sFormattedDate,
                                 style: TextStyle(
                                   fontSize: 17,
                                   color: (Prefs.lightThemeOn)

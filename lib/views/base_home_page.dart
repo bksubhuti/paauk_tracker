@@ -230,10 +230,10 @@ class HomePageContainerState extends State<HomePageContainer> {
           style: TextStyle(
             fontSize: 15,
           )),
-      content: SingleChildScrollView(
+      content: const SingleChildScrollView(
         child: ColoredText(
             "Pa-Auk Tracker was created to help keep track of the meditation yogi's and their interviews without the need to type the data into the database from exersise books. ",
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
             )),
       ),
@@ -333,9 +333,9 @@ External Packages used:  (see pub.dev)
     // set up the AlertDialog
     AlertDialog help = AlertDialog(
       title: ColoredText(AppLocalizations.of(context)!.help),
-      content: SingleChildScrollView(
+      content: const SingleChildScrollView(
         child: ColoredText("Ask someone for help",
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
             )),
       ),

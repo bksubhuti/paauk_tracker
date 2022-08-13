@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:paauk_tracker/views/base_home_page.dart';
-import 'dart:io' show Platform;
 // #docregion LocalizationDelegatesImport
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:paauk_tracker/src/models/prefs.dart';
+import 'dart:io';
 
 // #enddocregion LocalizationDelegatesImport
 // #docregion AppLocalizationsImport
@@ -33,6 +33,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Initialize SharedPrefs instance.
   await Prefs.init();
+  HttpOverrides.global = MyHttpOverrides();
 
   runApp(const MyApp());
 }
@@ -80,4 +81,13 @@ class MyApp extends StatelessWidget {
           );
         }, // builder
       );
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }

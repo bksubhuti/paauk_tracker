@@ -63,4 +63,7 @@ class InterviewDetails {
         "teacher": teacher,
         "pk": pk,
       };
+
+  bool isEqual(InterviewDetails i) =>
+      (stime == i.stime && id_code == i.id_code && teacher == i.teacher);
 }

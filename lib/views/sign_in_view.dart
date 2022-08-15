@@ -138,13 +138,21 @@ class _SignInViewState extends State<SignInView> {
                                 }, // on tap
                                 title: ColoredText(snapshot.data![index].kuti,
                                     style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
                                       color: (Prefs.lightThemeOn)
                                           ? Theme.of(context).primaryColor
                                           : Colors.white,
                                     )),
                                 subtitle: ColoredText(
-                                    "$adjustedName,  ${snapshot.data![index].country}"),
+                                    "$adjustedName,  ${snapshot.data![index].country}",
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                      color: (Prefs.lightThemeOn)
+                                          ? Theme.of(context).primaryColor
+                                          : Colors.white,
+                                    )),
                               ),
                             );
                           });

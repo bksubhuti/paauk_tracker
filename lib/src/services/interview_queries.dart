@@ -105,13 +105,15 @@ class InterviewQueries {
     final now = DateTime.now();
     String formattedLikeDate = DateFormat('yyyyMMdd').format(now);
 
-    String dbQuery =
-        "Delete from interviews WHERE id_code = '$iDCode' AND  teacher='$teacher' AND stime LIKE '$formattedLikeDate%'";
+    // delete foreign key in sync table first by selecting it.
+    // try begin commmmit?
 
+    String dbQuery =
+        "Delete from interviewsSync WHERE  EXISTS (Select interviews.pk from  interviews WHERE  id_code = '$iDCode' AND  teacher='$teacher' AND stime LIKE '$formattedLikeDate%' AND interviewsSync.fk = interviews.pk)  ";
     await _db.rawQuery(dbQuery);
 
     dbQuery =
-        "Delete from interviewsSync WHERE interviewsSync.fk =  interviews.pk";
+        "Delete from interviews WHERE id_code = '$iDCode' AND  teacher='$teacher' AND stime LIKE '$formattedLikeDate%'";
 
     await _db.rawQuery(dbQuery);
   }
@@ -120,6 +122,16 @@ class InterviewQueries {
     final _db = await _dbHelper.database;
 
     String dbQuery = "Delete from interviewsSync WHERE fk = '$fk'";
+
+    await _db.rawQuery(dbQuery);
+  }
+
+  Future addInterviewSyncRecord(
+      String iDCode, String stime, String teacher) async {
+    final _db = await _dbHelper.database;
+
+    String dbQuery = '''Insert INTO interviews (id_code, stime, teacher) 
+        VALUES ('$iDCode','$stime','$teacher');''';
 
     await _db.rawQuery(dbQuery);
   }

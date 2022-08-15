@@ -29,7 +29,7 @@ class KutiGroupTile extends StatelessWidget {
                   child: ColoredText(
                     label,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).appBarTheme.foregroundColor,
                     ),

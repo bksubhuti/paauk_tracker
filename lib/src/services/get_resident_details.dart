@@ -54,13 +54,28 @@ class GetResidentDetails {
         case 'G':
         case 'I':
           dbQuery =
-              "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like '$searchKey%' AND substr (Kuti,2,1)  IN ( '0','1','2','3','4','5','6','7','8','9') ORDER BY kuti;";
+              "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like '$searchKey%' AND substr (Kuti,2,1)  IN ( '0','1','2','3','4','5','6','7','8','9') ORDER BY ksort;";
           break;
         default:
           dbQuery =
-              "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like '$searchKey%' ORDER BY kuti;";
+              "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails WHERE kuti Like '$searchKey%' ORDER BY ksort;";
       }
     }
+
+    List<Map> list = await _db.rawQuery(dbQuery);
+    return list
+        .map((residentdetails) => ResidentDetails.fromJson(residentdetails))
+        .toList();
+
+    //return list.map((trail) => Trail.fromJson(trail)).toList();
+  }
+
+  Future<List<ResidentDetails>> getAllResidentDetails() async {
+    //await initDatabase();
+    final _db = await _dbHelper.database;
+
+    String dbQuery =
+        "SELECT kuti, id_code, passport_name,country, dhamma_name FROM residentDetails;";
 
     List<Map> list = await _db.rawQuery(dbQuery);
     return list
@@ -80,5 +95,30 @@ class GetResidentDetails {
     final _db = await _dbHelper.database;
 
     await _db.rawQuery("Delete  from residentDetails");
+  }
+
+  Future addKSort() async {
+    final _db = await _dbHelper.database;
+
+    List<Map> tableInfo = await _db.rawQuery(
+        "SELECT name FROM pragma_table_info('residentDetails') WHERE name = 'ksort';");
+
+    if (tableInfo.isEmpty) {
+      await _db.rawQuery("ALTER TABLE residentDetails ADD ksort int;");
+    }
+  }
+
+  Future makeKutiSort() async {
+    final _db = await _dbHelper.database;
+
+    List<ResidentDetails> resList = await getAllResidentDetails();
+
+    resList.forEach((element) async {
+      String numStr = element.kuti.replaceAll(RegExp(r'[^0-9]'), '');
+      // get number from the kuti String
+      int ksort = int.parse(numStr);
+      await _db.rawQuery(
+          "UPDATE residentDetails SET ksort = $ksort where kuti = '${element.kuti}'");
+    });
   }
 }

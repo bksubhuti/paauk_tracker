@@ -175,6 +175,7 @@ class _HomeState extends State<Home> {
   Future<void> _showDeleteItemDialog(
       String iDCode, String name, String kuti, String country) async {
     final iq = InterviewQueries();
+    bool _isLocked = true;
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -199,6 +200,23 @@ class _HomeState extends State<Home> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
+                const SizedBox(height: 20),
+                TextField(
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  obscureText: true,
+                  style: TextStyle(
+                      color: (Prefs.lightThemeOn)
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                      fontSize: 15),
+                  decoration: const InputDecoration(
+                      labelText: "Delete Code", border: OutlineInputBorder()),
+                  onChanged: (String data) async {
+                    _isLocked = data != "5656";
+                  },
+                ),
+                const SizedBox(height: 20),
                 ColoredText(name,
                     style: TextStyle(
                       fontSize: 24,
@@ -228,6 +246,7 @@ class _HomeState extends State<Home> {
               icon: const Icon(Icons.cancel),
               label: const Text('Cancel'),
               onPressed: () async {
+                _isLocked = true;
                 Navigator.of(context).pop();
               },
             ),
@@ -235,10 +254,13 @@ class _HomeState extends State<Home> {
               icon: const Icon(Icons.delete),
               label: const Text('Delete'),
               onPressed: () async {
-                await iq.deleteInterviewRecord(iDCode, Prefs.sayadawgyi);
+                if (!_isLocked) {
+                  await iq.deleteInterviewRecord(iDCode, Prefs.sayadawgyi);
+                }
                 setState(() {
                   dummy++;
                 });
+                _isLocked = true;
                 Navigator.of(context).pop();
               },
             ),

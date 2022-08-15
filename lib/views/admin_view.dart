@@ -110,6 +110,7 @@ class _AdminViewState extends State<AdminView> {
                       _downloading = true;
                     });
                     await fetchResidentSQL();
+                    // await dbService.makeKutiSort();
                     setState(() {
                       _downloading = false;
                     });
@@ -136,6 +137,19 @@ class _AdminViewState extends State<AdminView> {
                   onPressed: () async {
                     //final myAlbum = await fetchAlbum();
                     await getZipFile();
+                  },
+                ),
+                const SizedBox(height: 10),
+                FloatingActionButton.extended(
+                  heroTag: "testingMakecolumn",
+                  label: const Text('Testing Make column'),
+                  icon: const Icon(Icons.science),
+                  backgroundColor:
+                      Theme.of(context).appBarTheme.backgroundColor,
+                  onPressed: () async {
+                    final dbService = GetResidentDetails();
+                    await dbService.addKSort();
+                    await dbService.makeKutiSort();
                   },
                 ),
                 const SizedBox(height: 60),
@@ -331,29 +345,46 @@ class _AdminViewState extends State<AdminView> {
     // get all records from interviews from server
     // delete interviews
     // import records to interviews
-
+    setState(() {
+      _message += '\n Sync from server to device not supported yet ';
+    });
+/*
     syncList.clear();
     syncList = await dbService.getSyncInterviewDetails();
     if (syncList.isEmpty) {
+      // get all data from server (simulated by assets file)
       String data = await DefaultAssetBundle.of(context)
           .loadString("assets/interviews_testing.json");
 
-/*  
-//      final jsonResult<dynamic,String> = jsonDecode(data); //latest Dart
+      List<InterviewDetails> serverList =
+          interviewDetailsFromJson(data).toList();
 
-//      final list = jsonDecode(data);
-  //    debugPrint(list.toString());
-    list. // reuse this map because null safety all fields will be na but the ones we are looking for
-          .map(
-              (interviewdetails) => InterviewDetails.fromJson(interviewdetails))
-          .toList();
-//      debugPrint(jsonResult);
-//      debugPrint(jsonResult.toString());
-      // get all records from interviews from server
-//    https://apply.paauksociety.org/app_interview.php?id_code=de8f7367&stime=1660198571139&teacher=Sayadawgyi
-*/
+      if (serverList.isNotEmpty) {
+        List<InterviewDetails> localList =
+            await dbService.getAllInterviewDetails();
+        // we will assume the server is bigger or equal
+        // compare the local to server and remove from server what is found
+        // those remaining will be what needs to be added to the local db
+        // the list will get shorter and scans get faster as each scan happens.
+        for (int x = 0; x < localList.length; x++) {
+          //serverList.removeAt(localList[x].isEqual(itme));
+          serverList.removeWhere((myob) => localList[x].isEqual(myob));
+        }
+      }
+      setState(() {
+        _message += '\nThere were ${serverList.length} new items';
+      });
 
+      for (int x = 0; x < serverList.length; x++) {
+        await dbService.addInterviewSyncRecord(
+            serverList[x].id_code, serverList[x].stime, serverList[x].teacher);
+        setState(() {
+          _message += "\nadding records ${serverList[x].id_code}";
+        });
+      }
     }
+
+    */
   }
 
   Future<String> _syncOneInterview(InterviewDetails syncItem) async {

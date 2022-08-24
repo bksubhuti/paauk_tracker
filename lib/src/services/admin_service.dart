@@ -16,7 +16,8 @@ import 'package:archive/archive_io.dart';
 import 'package:path/path.dart';
 
 class AdminService {
-  final AdminNotifier _adminNotifier = AdminNotifier();
+  AdminService({required this.adminNotifier});
+  final AdminNotifier adminNotifier;
 
   String _dir = "";
 
@@ -71,18 +72,18 @@ class AdminService {
       String uniSql = utf8.decode(response.body.runes.toList());
 
       debugPrint(uniSql);
-      _adminNotifier.message = "downloaded sql file\n";
+      adminNotifier.message = "downloaded sql file\n";
 
       LineSplitter ls = const LineSplitter();
       List<String> dbQueries = ls.convert(uniSql);
 
-      _adminNotifier.message += "\nDeleting All from residentDetails Table\n";
+      adminNotifier.message += "\nDeleting All from residentDetails Table\n";
       await residentService.deleteAllRecords();
 
       for (int index = 0; index < dbQueries.length; index++) {
         await residentService.addResidentRecords(dbQueries[index]);
 
-        _adminNotifier.message =
+        adminNotifier.message =
             "\nAdded ${index + 1} Line of ${dbQueries.length} }\n";
       }
     } else {
@@ -107,15 +108,14 @@ class AdminService {
       _message = "Internet connection = $hasInternet";
     });
     */
-    _adminNotifier.message = "Internet connection = $hasInternet";
+    adminNotifier.message = "Internet connection = $hasInternet";
     if (hasInternet) {
       //setState(() {
-      _adminNotifier.downloading = true;
-      _adminNotifier.message =
-          "\nNow downlading file.. about 2MB\nPlease Wait.";
+      adminNotifier.downloading = true;
+      adminNotifier.message = "\nNow downlading file.. about 2MB\nPlease Wait.";
       //});
       await downloadZip();
-      _adminNotifier.downloading = false;
+      adminNotifier.downloading = false;
     }
   }
 
@@ -124,7 +124,7 @@ class AdminService {
     if (req.statusCode == 200) {
       var file = File('$_dir/$fileName');
       debugPrint("file.path ${file.path}");
-      _adminNotifier.message += "\nfile.path =  ${file.path}\n";
+      adminNotifier.message += "\nfile.path =  ${file.path}\n";
       return file.writeAsBytes(req.bodyBytes);
     } else {
       throw Exception('Failed to load zip file');
@@ -141,14 +141,14 @@ class AdminService {
     for (var file in archive) {
       var fileName = '$_dir/${file.name}';
       debugPrint("fileName $fileName");
-      _adminNotifier.message += "\nExtracting filename = $fileName\n";
+      adminNotifier.message += "\nExtracting filename = $fileName\n";
       if (file.isFile && !fileName.contains("__MACOSX")) {
         var outFile = File(fileName);
         outFile = await outFile.create(recursive: true);
         await outFile.writeAsBytes(file.content);
       }
     }
-    _adminNotifier.message = "\nDownloaded ${archive.length} files";
+    adminNotifier.message = "\nDownloaded ${archive.length} files";
   }
 
   Future syncInterviews(BuildContext context) async {
@@ -158,7 +158,7 @@ class AdminService {
 
     List<InterviewDetails> syncList = await dbService.getSyncInterviewDetails();
     String sResponse = "";
-    _adminNotifier.message += "Sync number = ${syncList.length}\n";
+    adminNotifier.message += "Sync number = ${syncList.length}\n";
 
     if (syncList.isNotEmpty) {
       for (int x = 0; x < syncList.length; x++) {
@@ -167,7 +167,7 @@ class AdminService {
         // if not found, then it is successful
         // delete the record by pk if success
         if (!sResponse.contains("Error")) {
-          _adminNotifier.message +=
+          adminNotifier.message +=
               "success in writing record ${x + 1} for Kuti: ${syncList[x].kuti}\n ";
 
           dbService.deleteInterviewSyncRecordByFk(syncList[x].pk);
@@ -180,8 +180,7 @@ class AdminService {
     // get all records from interviews from server
     // delete interviews
     // import records to interviews
-    _adminNotifier.message +=
-        '\n Sync from server to device not supported yet ';
+    adminNotifier.message += '\n Sync from server to device not supported yet ';
 /*
     syncList.clear();
     syncList = await dbService.getSyncInterviewDetails();
@@ -243,7 +242,7 @@ class AdminService {
       // If the server did not return a 200 OK response,
       // then throw an exception.
       sreturn = 'Failed to get response';
-      _adminNotifier.message += sreturn + "\n";
+      adminNotifier.message += sreturn + "\n";
       throw Exception(sreturn);
     }
 

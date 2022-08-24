@@ -20,8 +20,8 @@ class AdminView extends StatefulWidget {
 }
 
 class _AdminViewState extends State<AdminView> {
+  String _password = "not set";
 //  final dbService = GetResidentDetails();
-  final _adminService = AdminService();
 
   @override
   void initState() {
@@ -82,7 +82,7 @@ return Material(
                                 labelText: "Server Passcode",
                                 border: OutlineInputBorder()),
                             onChanged: (String data) async {
-                              _adminService.password = data;
+                              _password = data;
                             }),
                       ),
                       ElevatedButton(
@@ -104,7 +104,9 @@ return Material(
                       ElevatedButton(
                         child: const Text('Share CSV'),
                         onPressed: () async {
-                          _adminService.writeCSVFile();
+                          AdminService adminService =
+                              AdminService(adminNotifier: adminModel);
+                          adminService.writeCSVFile();
                           var databasePath = await getDatabasesPath();
                           String path = join(databasePath, 'paauk_tracker.csv');
                           final List<String> sl = [path];
@@ -125,8 +127,11 @@ return Material(
                         backgroundColor:
                             Theme.of(context).appBarTheme.backgroundColor,
                         onPressed: () async {
+                          AdminService adminService =
+                              AdminService(adminNotifier: adminModel);
+
                           adminModel.downloading = true;
-                          await _adminService.fetchResidentSQL();
+                          await adminService.fetchResidentSQL();
                           // await dbService.makeKutiSort();
                           setState(() {
                             adminModel.downloading = false;
@@ -141,7 +146,10 @@ return Material(
                         backgroundColor:
                             Theme.of(context).appBarTheme.backgroundColor,
                         onPressed: () async {
-                          _adminService.syncInterviews(context);
+                          AdminService adminService =
+                              AdminService(adminNotifier: adminModel);
+
+                          adminService.syncInterviews(context);
                         },
                       ),
                       const SizedBox(height: 10),
@@ -152,8 +160,11 @@ return Material(
                         backgroundColor:
                             Theme.of(context).appBarTheme.backgroundColor,
                         onPressed: () async {
+                          AdminService adminService =
+                              AdminService(adminNotifier: adminModel);
+
                           //final myAlbum = await fetchAlbum();
-                          await _adminService.getZipFile();
+                          await adminService.getZipFile();
                         },
                       ),
                       const SizedBox(height: 10),

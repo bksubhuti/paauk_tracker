@@ -7,7 +7,6 @@ import 'package:paauk_tracker/views/base_home_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:paauk_tracker/src/models/prefs.dart';
 import 'dart:io';
-import 'package:paauk_tracker/src/services/get_resident_details.dart';
 
 // #enddocregion LocalizationDelegatesImport
 // #docregion AppLocalizationsImport
@@ -35,9 +34,6 @@ void main() async {
   // Initialize SharedPrefs instance.
   await Prefs.init();
   HttpOverrides.global = MyHttpOverrides();
-
-  final dbService = GetResidentDetails();
-  await dbService.addKSort();
 
   runApp(const MyApp());
 }

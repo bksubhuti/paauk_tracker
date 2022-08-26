@@ -87,7 +87,8 @@ Future<void> showDateHistoryDialog(
                         return Card(
                           child: ListTile(
                             leading: YogiCircleAvatar(yogiID: iDCode),
-                            title: ColoredText(sFormattedDate,
+                            title: ColoredText(
+                                "(${snapshot.data!.length - index}) $sFormattedDate",
                                 style: TextStyle(
                                   fontSize: 17,
                                   color: (Prefs.lightThemeOn)

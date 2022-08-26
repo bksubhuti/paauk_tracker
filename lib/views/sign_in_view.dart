@@ -192,7 +192,7 @@ class _SignInViewState extends State<SignInView> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                YogiCircleAvatar(yogiID: iDCode),
+                YogiCircleAvatar(yogiID: iDCode, radius: 150),
                 ColoredText(name,
                     style: TextStyle(
                       fontSize: 24,

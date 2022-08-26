@@ -21,6 +21,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Map data = {};
   int dummy = 0;
+  int _counter = 1;
   final dbService = InterviewQueries();
 
   @override
@@ -124,7 +125,8 @@ class _HomeState extends State<Home> {
                                       leading: YogiCircleAvatar(
                                           yogiID:
                                               snapshot.data![index].id_code),
-                                      title: ColoredText(adjustedName,
+                                      title: ColoredText(
+                                          "(${snapshot.data!.length - index}) $adjustedName",
                                           style: TextStyle(
                                             fontSize: 17,
                                             color: (Prefs.lightThemeOn)

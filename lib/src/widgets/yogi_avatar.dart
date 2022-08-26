@@ -15,16 +15,18 @@ Future<bool> getYogiFileExists(String yogiID) async {
 }
 
 class YogiCircleAvatar extends StatelessWidget {
-  const YogiCircleAvatar({Key? key, required this.yogiID}) : super(key: key);
+  const YogiCircleAvatar({Key? key, required this.yogiID, this.radius = 60})
+      : super(key: key);
   final String yogiID;
+  final double radius;
 
   //     _exists = await getexists(widget.yogiID);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 200,
-      height: 100,
+      width: radius + 10,
+      height: radius + 10,
       child: FutureBuilder<bool>(
           future: getYogiFileExists(yogiID),
           builder: (context, snapshot) {
@@ -37,6 +39,7 @@ class YogiCircleAvatar extends StatelessWidget {
                 if (snapshot.data == true) {
                   debugPrint("loading file: ${Prefs.databaseDir}/$yogiID.jpg");
                   return CircleAvatar(
+                    radius: radius,
                     child: ClipOval(
                       child:
                           Image.file(File('${Prefs.databaseDir}/$yogiID.jpg')),
@@ -44,6 +47,7 @@ class YogiCircleAvatar extends StatelessWidget {
                   );
                 } else {
                   return CircleAvatar(
+                      radius: radius,
                       child: Image.asset('assets/meditation_icon.png'),
                       backgroundColor: Colors.transparent);
                 }

@@ -132,7 +132,7 @@ class _HistoryState extends State<History> {
                                     leading: YogiCircleAvatar(
                                         yogiID: snapshot.data![index].id_code),
                                     title: ColoredText(
-                                        "$adjustedName, ${snapshot.data![index].kuti} ",
+                                        "(${snapshot.data!.length - index}) $adjustedName, ${snapshot.data![index].kuti} ",
                                         style: TextStyle(
                                           fontSize: 17,
                                           color: (Prefs.lightThemeOn)

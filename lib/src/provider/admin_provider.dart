@@ -16,5 +16,6 @@ class AdminNotifier extends ChangeNotifier {
   set downloading(bool val) {
     _downloading = val;
     notifyListeners();
+    void fetchResidentSQL() {}
   }
 }

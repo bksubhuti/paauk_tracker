@@ -17,7 +17,7 @@ import 'package:path/path.dart';
 
 class AdminService {
   AdminService({required this.adminNotifier});
-  final AdminNotifier adminNotifier;
+  AdminNotifier adminNotifier;
 
   String _dir = "";
 

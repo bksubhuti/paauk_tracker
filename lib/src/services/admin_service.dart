@@ -16,25 +16,24 @@ import 'package:archive/archive_io.dart';
 import 'package:path/path.dart';
 
 class AdminService {
-  AdminService({required this.adminNotifier});
   AdminNotifier adminNotifier;
+  String password;
 
   String _dir = "";
 
-  final String _zipPath =
-      'https://apply.paauksociety.org/app_interview.php?images.zip';
+  String _zipPath = "not set";
   final String _localZipFileName = 'images.zip';
-  final String _localResidentSqlFileName = "residentDetails.sql";
-  final String _residentSqlDataURL =
-      'https://apply.paauksociety.org/app_interview.php?residentDetails.sql';
+  //final String _localResidentSqlFileName = "residentDetails.sql";
+  String _residentSqlDataURL = "not set";
   final dbService = InterviewQueries();
   final residentService = GetResidentDetails();
 
-  String _password = "not-set";
-  String get password => _password;
+  AdminService({required this.adminNotifier, required this.password}) {
+    _zipPath =
+        'https://apply.paauksociety.org/app_interview.php?Password=$password&images.zip';
 
-  set password(String val) {
-    _password = val;
+    _residentSqlDataURL =
+        'https://apply.paauksociety.org/app_interview.php?Password=$password&residentDetails.sql';
   }
 
   //////////////////////////////////////////
@@ -223,21 +222,25 @@ class AdminService {
   Future<String> syncOneInterview(InterviewDetails syncItem) async {
     String sreturn = "Error";
     final Response response = await http.get(Uri.parse(
-        'https://apply.paauksociety.org/app_interview.php?id_code=${syncItem.id_code}&stime=${syncItem.stime}&teacher=${syncItem.teacher}'));
+        'https://apply.paauksociety.org/app_interview.php?Password=$password&id_code=${syncItem.id_code}&stime=${syncItem.stime}&teacher=${syncItem.teacher}'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       //return Album.fromJson(jsonDecode(response.body));
       debugPrint(
-          'https://apply.paauksociety.org/app_interview.php?id_code=${syncItem.id_code}&stime=${syncItem.stime}&teacher=${syncItem.teacher}');
+          'https://apply.paauksociety.org/app_interview.php?Password=$password&id_code=${syncItem.id_code}&stime=${syncItem.stime}&teacher=${syncItem.teacher}');
       debugPrint(response.body);
 
       // parse response code.
       // count increment sucess count
       // update message each time
       // if success count ==
-      sreturn = "1";
+      if (response.body.contains("success")) {
+        sreturn = "1";
+      } else {
+        sreturn = "Error";
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.

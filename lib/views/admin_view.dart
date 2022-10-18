@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paauk_tracker/src/services/get_resident_details.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:core';
 import 'package:paauk_tracker/src/models/colored_text.dart';
 import 'package:paauk_tracker/src/models/prefs.dart';
@@ -68,10 +68,8 @@ return Material(
                           elevation: 2),
                       SizedBox(
                         height: 90,
-                        width: 400,
+                        width: 300,
                         child: TextField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true),
                             obscureText: true,
                             style: TextStyle(
                                 color: (Prefs.lightThemeOn)
@@ -104,8 +102,8 @@ return Material(
                       ElevatedButton(
                         child: const Text('Share CSV'),
                         onPressed: () async {
-                          AdminService adminService =
-                              AdminService(adminNotifier: adminModel);
+                          AdminService adminService = AdminService(
+                              adminNotifier: adminModel, password: _password);
                           adminService.writeCSVFile();
                           var databasePath = await getDatabasesPath();
                           String path = join(databasePath, 'paauk_tracker.csv');
@@ -127,8 +125,8 @@ return Material(
                         backgroundColor:
                             Theme.of(context).appBarTheme.backgroundColor,
                         onPressed: () async {
-                          AdminService adminService =
-                              AdminService(adminNotifier: adminModel);
+                          AdminService adminService = AdminService(
+                              adminNotifier: adminModel, password: _password);
 
                           adminModel.downloading = true;
                           await adminService.fetchResidentSQL();
@@ -146,8 +144,8 @@ return Material(
                         backgroundColor:
                             Theme.of(context).appBarTheme.backgroundColor,
                         onPressed: () async {
-                          AdminService adminService =
-                              AdminService(adminNotifier: adminModel);
+                          AdminService adminService = AdminService(
+                              adminNotifier: adminModel, password: _password);
 
                           adminService.syncInterviews(context);
                         },
@@ -160,8 +158,8 @@ return Material(
                         backgroundColor:
                             Theme.of(context).appBarTheme.backgroundColor,
                         onPressed: () async {
-                          AdminService adminService =
-                              AdminService(adminNotifier: adminModel);
+                          AdminService adminService = AdminService(
+                              adminNotifier: adminModel, password: _password);
 
                           //final myAlbum = await fetchAlbum();
                           await adminService.getZipFile();
@@ -169,15 +167,13 @@ return Material(
                       ),
                       const SizedBox(height: 10),
                       FloatingActionButton.extended(
-                        heroTag: "testingMakecolumn",
-                        label: const Text('Testing Make column'),
-                        icon: const Icon(Icons.science),
+                        heroTag: "Add Photo",
+                        label: const Text('Add Photo'),
+                        icon: const Icon(Icons.photo),
                         backgroundColor:
                             Theme.of(context).appBarTheme.backgroundColor,
                         onPressed: () async {
-                          final dbService = GetResidentDetails();
-                          await dbService.addKSort();
-                          await dbService.makeKutiSort();
+                          _launchURL();
                         },
                       ),
                       const SizedBox(height: 60),
@@ -214,5 +210,15 @@ return Material(
             );
           }),
         ));
+  }
+
+  _launchURL() async {
+    final photourl = Uri.parse(
+        'http://apply.paauksociety.org/app_interview.php?Password=$_password&upload');
+    if (await canLaunchUrl(photourl)) {
+      await launchUrl(photourl, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
